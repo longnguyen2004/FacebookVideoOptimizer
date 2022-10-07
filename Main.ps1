@@ -35,10 +35,18 @@ while ($true)
         Write-Host;
         return;
     }
+
+	# PowerShell drag-and-drop paths
     if ($InputFile -match "^& '(.+)'$")
     {
         $InputFile = $Matches[1] -replace "''","'"
     }
+	# Windows Terminal drag-and-drop paths
+	elseif ($InputFile -match '^"(.+)"$')
+	{
+		$InputFile = $Matches[1]
+	}
+
     if (-not (Test-Path $InputFile))
     {
         Write-Error "Đường dẫn không hợp lệ!";
