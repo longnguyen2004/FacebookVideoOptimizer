@@ -18,13 +18,14 @@ else
     $OS = $IsWindows ? "win32" : $IsMacOS ? "darwin" : "linux";
     $Architecture = [Environment]::Is64BitOperatingSystem ? "x64" : "ia32";
     $DownloadLink = "https://github.com/eugeneware/ffmpeg-static/releases/download/$LatestVersion/$OS-$Architecture";
-    Write-Host "Tải FFmpeg $LatestVersion từ $DownloadLink";
+    Write-Host "Đang tải FFmpeg $LatestVersion từ $DownloadLink";
     Invoke-WebRequest $DownloadLink -OutFile $FFmpegInternalPath -ErrorAction Stop;
     if (-not $IsWindows)
     {
         chmod a+x "$FFmpegInternalPath";
     }
     $FFmpeg = $FFmpegInternalPath;
+	Write-Host "Đã tải xong`n"
 }
 
 while ($true)
