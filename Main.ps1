@@ -19,7 +19,7 @@ else
     $Architecture = [Environment]::Is64BitOperatingSystem ? "x64" : "ia32";
     $DownloadLink = "https://github.com/eugeneware/ffmpeg-static/releases/download/$LatestVersion/$OS-$Architecture";
     Write-Host "Tải FFmpeg $LatestVersion từ $DownloadLink";
-    Invoke-WebRequest $DownloadLink -OutFile $FFmpegInternalPath;
+    Invoke-WebRequest $DownloadLink -OutFile $FFmpegInternalPath -ErrorAction Stop;
     if (-not $IsWindows)
     {
         chmod a+x "$FFmpegInternalPath";
