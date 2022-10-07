@@ -35,6 +35,10 @@ while ($true)
         Write-Host;
         return;
     }
+    if ($InputFile -match "^& '(.+)'$")
+    {
+        $InputFile = $Matches[1] -replace "''","'"
+    }
     if (-not (Test-Path $InputFile))
     {
         Write-Error "Đường dẫn không hợp lệ!";
