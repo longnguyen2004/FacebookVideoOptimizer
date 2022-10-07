@@ -29,7 +29,7 @@ else
 
 while ($true)
 {
-    $InputFile = Read-Host "Đường dẫn đến file video cần xử lý";
+    $InputFile = Read-Host "Đường dẫn đến file video cần xử lý (có thể kéo thả)";
     if (-not $InputFile)
     {
         Write-Host;
