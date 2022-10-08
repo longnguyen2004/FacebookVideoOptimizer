@@ -67,12 +67,6 @@ while ($true)
     }
     Write-Host;
 
-    <#
-        Chỉnh sửa preset ở đây nếu encode quá lâu
-        Danh sách các preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
-        Khuyến khích dùng veryfast trở xuống, không dùng ultrafast và superfast
-    #>
-
     Write-Host "Thực hiện 2-pass VBR với x264, preset $Preset";
     Write-Host "(có thể đổi preset bằng switch -Preset)";
     Write-Host "Bitrate: 1800kbps (video) + 128kbps (audio)`n";
