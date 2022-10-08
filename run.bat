@@ -14,3 +14,4 @@ if not ERRORLEVEL 0 (
     pause && exit
 )
 pwsh -ExecutionPolicy Bypass -File Main.ps1
+pause
