@@ -1,3 +1,8 @@
+param(
+    [switch] $Debug,
+    [string] $Preset = "medium"
+)
+
 $FFmpegInternalPath = Join-Path "$PSScriptRoot" "ffmpeg" ("ffmpeg" + ($IsWindows ? ".exe" : ""));
 if ($FFmpegSystem = Get-Command ffmpeg -ErrorAction SilentlyContinue)
 {
@@ -26,6 +31,11 @@ else
     }
     $FFmpeg = $FFmpegInternalPath;
     Write-Host "Đã tải xong`n"
+}
+
+if ($Debug)
+{
+    Write-Host "Đã kích hoạt chế độ debug. FFmpeg sẽ hiển thị thêm thông tin về video."
 }
 
 while ($true)
@@ -60,25 +70,26 @@ while ($true)
         Danh sách các preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
         Khuyến khích dùng veryfast trở xuống, không dùng ultrafast và superfast
     #>
-    $Preset = "medium"
 
     Write-Host "Thực hiện 2-pass VBR với x264, preset $Preset";
-    Write-Host "(có thể edit file để chỉnh sửa preset)"
+    Write-Host "(có thể đổi preset bằng switch -Preset)";
     Write-Host "Bitrate: 1800kbps (video) + 128kbps (audio)`n";
 
     $OutputFile = Join-Path (Split-Path -Parent $InputFile) ((Split-Path -LeafBase $InputFile) + " (transcode).mp4");
-    Write-Host "File output: $OutputFile`n"
+    Write-Host "File output: $OutputFile`n";
 
-    Write-Host "Pass 1:"
+    $LogLevel = $Debug ? "info" : "warning";
+
+    Write-Host "Pass 1:";
     & "$FFmpeg" -y -i "$InputFile" `
-        -hide_banner -loglevel warning -stats -vsync cfr `
+        -hide_banner -loglevel $LogLevel -stats -vsync cfr `
         -c:v libx264 -b:v 1800k -pass 1                  `
         -an -f null ($IsWindows ? "NUL" : "/dev/null")
     Write-Host;
 
     Write-Host "Pass 2:"
     & "$FFmpeg" -y -i "$InputFile" `
-        -hide_banner -loglevel warning -stats -vsync cfr `
+        -hide_banner -loglevel $LogLevel -stats -vsync cfr `
         -c:v libx264 -b:v 1800k -pass 2                  `
         "$OutputFile"
     Write-Host;
