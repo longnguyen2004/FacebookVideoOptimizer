@@ -1,4 +1,5 @@
 @echo off
+setlocal
 REM Windows version detection
 for /f "tokens=4-7 delims=[.] " %%i in ('ver') do (if %%i==Version (set v=%%j.%%k) else (set v=%%i.%%j))
 if "%v%" == "10.0" (
@@ -15,3 +16,4 @@ if not ERRORLEVEL 0 (
 )
 pwsh -ExecutionPolicy Bypass -File Main.ps1 %*
 pause
+endlocal
