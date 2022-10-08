@@ -1,5 +1,7 @@
 param(
     [switch] $Debug,
+
+    [ValidateSet("ultrafast", "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow")]
     [string] $Preset = "medium"
 )
 
