@@ -25,7 +25,7 @@ else
         chmod a+x "$FFmpegInternalPath";
     }
     $FFmpeg = $FFmpegInternalPath;
-	Write-Host "Đã tải xong`n"
+    Write-Host "Đã tải xong`n"
 }
 
 while ($true)
