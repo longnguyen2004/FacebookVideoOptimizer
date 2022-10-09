@@ -87,6 +87,7 @@ while ($true)
     Write-Host "Pass 1:";
     & "$FFmpeg" -y -i "$InputFile" `
         -hide_banner -loglevel $LogLevel -stats -vsync cfr `
+        -preset $Preset                                    `
         -c:v $Encoder -b:v 1800k @Pass1Param               `
         -an -f null ($IsWindows ? "NUL" : "/dev/null")
     Write-Host;
@@ -94,6 +95,7 @@ while ($true)
     Write-Host "Pass 2:"
     & "$FFmpeg" -y -i "$InputFile" `
         -hide_banner -loglevel $LogLevel -stats -vsync cfr `
+        -preset $Preset                                    `
         -c:v $Encoder -b:v 1800k @Pass2Param               `
         "$OutputFile"
     Write-Host;
