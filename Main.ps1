@@ -98,6 +98,7 @@ while ($true)
         -hide_banner -loglevel $LogLevel -stats -vsync cfr `
         -preset $Preset                                    `
         -c:v $Encoder -b:v 1800k @Pass2Param               `
+        -movflags +faststart                               `
         "$OutputFile"
     Write-Host;
     Remove-Item "*2pass*";
