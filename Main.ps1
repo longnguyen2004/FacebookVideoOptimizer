@@ -2,7 +2,9 @@ param(
     [switch] $Debug,
 
     [ValidateSet("ultrafast", "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow")]
-    [string] $Preset = "medium"
+    [string] $Preset = "medium",
+
+    [string] $Encoder = "libx264"
 )
 
 $FFmpegInternalPath = Join-Path "$PSScriptRoot" "ffmpeg" ("ffmpeg" + ($IsWindows ? ".exe" : ""));
@@ -40,6 +42,14 @@ if ($Debug)
     Write-Host "Đã kích hoạt chế độ debug. FFmpeg sẽ hiển thị thêm thông tin về video."
 }
 
+$2PassParams = @{
+    "libx264" = ("-pass", "1"), ("-pass", "2");
+    "libx265" = ("-x265-params", "pass=1"), ("-x265-params", "pass=2")
+}
+$LogLevel = $Debug ? "info" : "warning";
+$Pass1Param = $2PassParams[$Encoder][0];
+$Pass2Param = $2PassParams[$Encoder][1];
+
 while ($true)
 {
     $InputFile = Read-Host "Đường dẫn đến file video cần xử lý (có thể kéo thả)";
@@ -67,27 +77,25 @@ while ($true)
     }
     Write-Host;
 
-    Write-Host "Thực hiện 2-pass VBR với x264, preset $Preset";
+    Write-Host "Thực hiện 2-pass VBR với $Encoder, preset $Preset";
     Write-Host "(có thể đổi preset bằng switch -Preset)";
     Write-Host "Bitrate: 1800kbps (video) + 128kbps (audio)`n";
 
     $OutputFile = Join-Path (Split-Path -Parent $InputFile) ((Split-Path -LeafBase $InputFile) + " (transcode).mp4");
     Write-Host "File output: $OutputFile`n";
 
-    $LogLevel = $Debug ? "info" : "warning";
-
     Write-Host "Pass 1:";
     & "$FFmpeg" -y -i "$InputFile" `
         -hide_banner -loglevel $LogLevel -stats -vsync cfr `
-        -c:v libx264 -b:v 1800k -pass 1                  `
+        -c:v $Encoder -b:v 1800k @Pass1Param               `
         -an -f null ($IsWindows ? "NUL" : "/dev/null")
     Write-Host;
 
     Write-Host "Pass 2:"
     & "$FFmpeg" -y -i "$InputFile" `
         -hide_banner -loglevel $LogLevel -stats -vsync cfr `
-        -c:v libx264 -b:v 1800k -pass 2                  `
+        -c:v $Encoder -b:v 1800k @Pass2Param               `
         "$OutputFile"
     Write-Host;
-    Remove-Item "ffmpeg2pass*";
+    Remove-Item "*2pass*";
 }
