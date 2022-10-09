@@ -23,7 +23,7 @@ else
 {
     Write-Host "Không tìm thấy FFmpeg";
     New-Item -ItemType Directory (Split-Path -Parent $FFmpegInternalPath) -ErrorAction SilentlyContinue | Out-Null;
-    $GitHubAPIRes = ConvertFrom-JSON (Invoke-WebRequest "https://api.github.com/repos/eugeneware/ffmpeg-static/releases/latest");
+    $GitHubAPIRes = Invoke-RestMethod "https://api.github.com/repos/eugeneware/ffmpeg-static/releases/latest";
     $LatestVersion = $GitHubAPIRes.tag_name;
     $OS = $IsWindows ? "win32" : $IsMacOS ? "darwin" : "linux";
     $Architecture = [Environment]::Is64BitOperatingSystem ? "x64" : "ia32";
