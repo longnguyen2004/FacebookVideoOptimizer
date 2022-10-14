@@ -47,9 +47,14 @@ $2PassParams = @{
     "libx264" = ("-pass", "1"), ("-pass", "2");
     "libx265" = ("-x265-params", "pass=1"), ("-x265-params", "pass=2")
 }
+$CommonParams = @{
+    "libx264" = ("-x264-params", "open-gop=1:direct=auto", "-flags", "-cgop")
+}
+
 $LogLevel = $Debug ? "info" : "warning";
 $Pass1Param = $2PassParams[$Encoder][0];
 $Pass2Param = $2PassParams[$Encoder][1];
+$CommonParam = $CommonParams[$Encoder];
 
 while ($true)
 {
@@ -93,7 +98,8 @@ while ($true)
     & "$FFmpeg" -y -i "$InputFile" `
         -hide_banner -loglevel $LogLevel -stats -vsync cfr `
         -preset $Preset                                    `
-        -c:v $Encoder -b:v 1800k @Pass1Param               `
+        -c:v $Encoder -b:v "${VideoBitrate}k"              `
+        @CommonParam @Pass1Param                           `
         -an -f null ($IsWindows ? "NUL" : "/dev/null")
     Write-Host;
 
@@ -101,7 +107,9 @@ while ($true)
     & "$FFmpeg" -y -i "$InputFile" `
         -hide_banner -loglevel $LogLevel -stats -vsync cfr `
         -preset $Preset                                    `
-        -c:v $Encoder -b:v 1800k @Pass2Param               `
+        -c:v $Encoder -b:v "${VideoBitrate}k"              `
+        @CommonParam @Pass2Param                           `
+        -c:a aac      -b:a "${AudioBitrate}k"              `
         -movflags +faststart                               `
         "$OutputFile"
     Write-Host;
