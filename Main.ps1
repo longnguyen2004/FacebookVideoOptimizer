@@ -78,9 +78,13 @@ while ($true)
     }
     Write-Host;
 
-    Write-Host "Thực hiện 2-pass VBR với $Encoder, preset $Preset";
+    $VideoBitrate = 1800;
+    $AudioBitrate = 128;
+
+    Write-Host "Video codec: $Encoder, preset $Preset";
     Write-Host "(có thể đổi preset bằng switch -Preset)";
-    Write-Host "Bitrate: 1800kbps (video) + 128kbps (audio)`n";
+    Write-Host "Audio codec: aac";
+    Write-Host "Bitrate: ${VideoBitrate}kbps (video) + ${AudioBitrate}kbps (audio)`n";
 
     $OutputFile = Join-Path (Split-Path -Parent $InputFile) ((Split-Path -LeafBase $InputFile) + " (transcode).mp4");
     Write-Host "File output: $OutputFile`n";
