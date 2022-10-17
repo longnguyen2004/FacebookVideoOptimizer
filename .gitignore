@@ -1,1 +1,5 @@
+# FFmpeg folder
 ffmpeg
+
+# 2-pass related files
+*2pass*
