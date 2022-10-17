@@ -48,7 +48,7 @@ $2PassParams = @{
     "libx265" = ("-x265-params", "pass=1"), ("-x265-params", "pass=2")
 }
 $CommonParams = @{
-    "libx264" = ("-x264-params", "direct=auto")
+    "libx264" = ("-x264-params", "direct=auto:trellis=2:psy-rd='1.2:0.5'")
 }
 
 $LogLevel = $Debug ? "info" : "warning";
