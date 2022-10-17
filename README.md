@@ -2,7 +2,14 @@
 
 ## Tip để record chất lượng cao
 
-Không bao giờ sử dụng CBR hoặc VBR cho record, luôn luôn sử dụng CRF/CQ/CQP để source có chất lượng cao nhất có thể.
+Không bao giờ sử dụng CBR hoặc VBR cho record. Những mode này không điều chỉnh bitrate tương ứng với video, nên sẽ gây thừa bitrate với video đơn giản (osu!,...) và thiếu bitrate với video phức tạp (Geometry Dash,...)
+
+Một số cài đặt khuyên dùng với các loại encoder:
+
+- x264: CRF 20-23
+- NVIDIA NVENC: CQP 20, Preset: Quality, bật Look-ahead và Psycho Visual Tuning
+- Intel QuickSync: LA-ICQ 20-23
+- AMD AMF: CQP, Quality Preset: Quality, I-frame QP: 20, P-frame QP: 25
 
 Script này không tăng frame rate (30 -> 60), vì thế video gốc của bạn phải được quay ở 60fps.
 
