@@ -17,8 +17,8 @@ function Encode-Software {
     Write-Host @"
 Danh sách preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
 Cách chọn preset:
-    - Máy yếu: veryfast -> fast
-    - Máy mạnh: medium -> veryslow
+    - Máy yếu: veryfast hoặc faster
+    - Máy mạnh: medium hoặc slow
 
 "@
     do
