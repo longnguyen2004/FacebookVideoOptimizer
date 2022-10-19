@@ -36,7 +36,7 @@ Cách chọn preset:
 Sử dụng libx264 để encode
 Preset: $Preset
 Rate control: 2-pass VBR
-Bitrate: ${VideoBitrate}kbps (video) + ${AudioBitrate} (audio)
+Bitrate: ${VideoBitrate}kbps (video) + ${AudioBitrate}kbps (audio)
 
 "@
     $CommonParam = ("-x264-params", "direct=auto:trellis=2:psy-rd='1.2:0.5':aq-mode=3:aq-strength=0.7")
