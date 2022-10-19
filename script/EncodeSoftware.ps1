@@ -32,6 +32,7 @@ Cách chọn preset:
     while (-not $ValidPresets.ContainsKey($Preset));
 
     Write-Host @"
+
 Sử dụng libx264 để encode
 Preset: $Preset
 Rate control: 2-pass VBR
