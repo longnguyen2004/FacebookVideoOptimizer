@@ -1,5 +1,5 @@
 $FFmpegDir = Join-Path "$PSScriptRoot" ".." "ffmpeg";
-if (Get-Command "ffmpeg" -ErrorAction SilentlyContinue)
+if ($FFmpegSystem = Get-Command "ffmpeg" -ErrorAction SilentlyContinue)
 {
     Write-Host "Dùng FFmpeg của hệ thống tại $($FFmpegSystem.Source)";
     $FFmpeg = $FFmpegSystem.Source;
