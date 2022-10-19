@@ -11,4 +11,5 @@ if ! command -v pwsh >/dev/null 2>&1; then
     read _
     exit
 fi
-pwsh -File Main.ps1 "$@"
+BASE_DIR="$(cd "$(dirname "$0")"; pwd)"
+pwsh -File "$BASE_DIR/script/Main.ps1" "$@"

@@ -14,6 +14,6 @@ if not %ERRORLEVEL% == 0 (
     @echo Vui lòng truy cập https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows#msi
     pause && exit
 )
-pwsh -ExecutionPolicy Bypass -File Main.ps1 %*
+pwsh -ExecutionPolicy Bypass -File "%~dp0\script\Main.ps1" %*
 pause
 endlocal
