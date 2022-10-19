@@ -39,7 +39,9 @@ else
     }
     elseif ($IsLinux)
     {
-        $Link = "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz";
+        $Architecture = uname -m;
+        $DownloadArch = ($Architecture -match '^(arm|aarch)64$') ? "arm64" : "64";
+        $Link = "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux$DownloadArch-gpl.tar.xz";
         $ArchivePath = "/tmp/ffmpeg.tar.xz";
         Write-Host "Đang tải $Link";
         Invoke-WebRequest $Link -OutFile "$ArchivePath";
