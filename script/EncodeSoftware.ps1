@@ -39,7 +39,14 @@ Rate control: 2-pass VBR
 Bitrate: ${VideoBitrate}kbps (video) + ${AudioBitrate}kbps (audio)
 
 "@
-    $CommonParam = ("-x264-params", "direct=auto:trellis=2:psy-rd='1.2:0.5':aq-mode=3:aq-strength=0.7")
+    $CommonParam = (
+        "-aq-mode"     , "3",
+        "-aq-strength" , "0.7",
+        "-psy-rd"      , "1.2:0.5",
+        "-rc-lookahead", "100",
+        "-direct-pred" , "3",
+        "-x264-params" , "trellis=2"
+    )
 
     Write-Host "Pass 1:";
     & "$FFmpeg" -y -i "$InputFile" `
