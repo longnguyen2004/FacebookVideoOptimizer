@@ -16,7 +16,6 @@ Danh sách preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, s
 Cách chọn preset:
     - Máy yếu: veryfast hoặc faster
     - Máy mạnh: medium hoặc slow
-
 "@
     do
     {
