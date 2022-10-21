@@ -3,7 +3,7 @@ param(
 )
 
 . $PSScriptRoot/FFmpegCheck.ps1
-. $PSScriptRoot/EncodeSoftware.ps1
+. $PSScriptRoot/Encode.ps1
 
 if ($Debug)
 {
