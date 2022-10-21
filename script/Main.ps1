@@ -48,5 +48,6 @@ while ($true)
     Write-Host @"
 Đã hoàn tất
 File output: $OutputFile
+
 "@;
 }

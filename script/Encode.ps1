@@ -1,10 +1,28 @@
 function Encode {
     param(
         [string] $InputFile,
-        [string] $OutputFile        
+        [string] $OutputFile
     )
     . $PSScriptRoot/EncoderSettings-Software.ps1;
-    $EncoderSettings = GetEncoderSettings-Software;
+    . $PSScriptRoot/EncoderSettings-Hardware.ps1;
+
+    Write-Host @"
+Chọn loại encoder:
+1. CPU (chậm hơn, chất lượng cao hơn)
+2. GPU (nhanh hơn, chất lượng thấp hơn)
+"@
+    $EncoderType = [int](Read-Host -Prompt "Choice (1, 2)");
+    Write-Host;
+    switch ($EncoderType)
+    {
+        1 {
+            $EncoderSettings = GetEncoderSettings-Software;
+        }
+        2 {
+            $EncoderSettings = GetEncoderSettings-Hardware;
+        }
+    }
+
     $Encoder = $EncoderSettings["Encoder"];
     $CommonParam = $EncoderSettings["CommonParam"];
     Write-Host "Bitrate: ${VideoBitrate}kbps (video) + ${AudioBitrate}kbps (audio)";
@@ -31,5 +49,15 @@ function Encode {
             "$OutputFile"
         Write-Host;
         Remove-Item "*2pass*";
+    }
+    else
+    {
+        & "$FFmpeg" -y -i "$InputFile" `
+            -hide_banner -loglevel $LogLevel -stats -fps_mode cfr `
+            -c:v $Encoder -b:v "${VideoBitrate}k"                 `
+            @CommonParam                                          `
+            -movflags +faststart                                  `
+            "$OutputFile"
+        Write-Host;
     }
 }
