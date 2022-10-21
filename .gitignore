@@ -3,3 +3,6 @@ ffmpeg
 
 # 2-pass related files
 *2pass*
+
+# VS Code folder settings
+.vscode
