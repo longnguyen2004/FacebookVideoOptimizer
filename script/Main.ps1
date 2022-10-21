@@ -10,7 +10,7 @@ if ($Debug)
     Write-Host "Đã kích hoạt chế độ debug. FFmpeg sẽ hiển thị thêm thông tin về video."
 }
 
-$LogLevel = $Debug ? "info" : "warning";
+$LogLevel = $Debug ? "info" : "error";
 
 while ($true)
 {
