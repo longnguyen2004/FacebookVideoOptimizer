@@ -44,9 +44,9 @@ while ($true)
 
     $OutputFile = Join-Path (Split-Path -Parent $InputFile) ((Split-Path -LeafBase $InputFile) + " (transcode).mp4");
 
-    Encode-Software "$InputFile" "$OutputFile"
+    Encode "$InputFile" "$OutputFile";
     Write-Host @"
 Đã hoàn tất
 File output: $OutputFile
-"@
+"@;
 }
