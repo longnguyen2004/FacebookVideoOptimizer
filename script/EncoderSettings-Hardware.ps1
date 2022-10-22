@@ -19,15 +19,14 @@ Rate control: VBR High Quality
                 "CommonParam" = (
                     "-multipass"   , "2",
                     "-rc-lookahead", "200",
-                    "-2pass"       , "1",
                     "-spatial_aq"  , "1",
                     "-temporal_aq" , "1",
                     "-nonref_p"    , "1",
                     "-coder"       , "cabac",
                     "-b_ref_mode"  , "1",
-                    "-preset"      , "slow",
-                    "-maxrate"     , "5M",
-                    "-bufsize"     , "5M"
+                    "-preset"      , "p7",
+                    "-maxrate:v"   , "5M",
+                    "-bufsize:v"   , "10M"
                 )
             }
         }
@@ -45,8 +44,8 @@ Rate control: VBR + Pre-Analysis
                     "-vbaq"       , "1",
                     "-preanalysis", "1",
                     "-coder"      , "cabac",
-                    "-maxrate"    , "5M",
-                    "-bufsize"    , "5M"
+                    "-maxrate:v"  , "5M",
+                    "-bufsize:v"  , "10M"
                 )
             }
         }
