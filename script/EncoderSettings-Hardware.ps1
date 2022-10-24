@@ -11,7 +11,7 @@ Chọn GPU bạn có
         1 {
             Write-Host @"
 Sử dụng NVIDIA NVENC để encode
-Rate control: VBR High Quality
+Rate control: CQ + Bitrate Limit
 "@;
             return @{
                 "Encoder"     = "h264_nvenc";
@@ -25,8 +25,9 @@ Rate control: VBR High Quality
                     "-coder"       , "cabac",
                     "-b_ref_mode"  , "1",
                     "-preset"      , "p7",
-                    "-maxrate:v"   , "5M",
-                    "-bufsize:v"   , "10M"
+                    "-cq"          , "26",
+                    "-maxrate:v"   , "${VideoBitrate}k",
+                    "-bufsize:v"   , "5M"
                 )
             }
         }
