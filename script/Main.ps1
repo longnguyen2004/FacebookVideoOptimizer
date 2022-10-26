@@ -32,7 +32,7 @@ while ($true)
     	$InputFile = $Matches[1]
     }
 
-    if (-not (Test-Path $InputFile))
+    if (-not (Test-Path $InputFile -PathType Leaf))
     {
         Write-Error "Đường dẫn không hợp lệ!";
         continue;
