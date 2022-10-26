@@ -27,7 +27,7 @@ Rate control: CQ + Bitrate Limit
                     "-coder"       , "cabac",
                     "-b_ref_mode"  , "1",
                     "-preset"      , "p7",
-                    "-maxrate:v"   , "$($VideoBitrate + 50)k",
+                    "-maxrate:v"   , "${VideoBitrate}k",
                     "-bufsize:v"   , "5M"
                 )
             }
