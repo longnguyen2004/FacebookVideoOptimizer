@@ -41,6 +41,10 @@ Chọn loại encoder:
             @CommonParam @Pass1Param                              `
             -an -f null ($IsWindows ? "NUL" : "/dev/null")
         Write-Host;
+        if ($LASTEXITCODE -ne 0) 
+        {
+            return $false;
+        }
 
         Write-Host "Pass 2:"
         & "$FFmpeg" -y -i "$InputFile" `
@@ -51,6 +55,10 @@ Chọn loại encoder:
             "$OutputFile"
         Write-Host;
         Remove-Item "*2pass*";
+        if ($LASTEXITCODE -ne 0) 
+        {
+            return $false;
+        }
     }
     else
     {
@@ -61,5 +69,10 @@ Chọn loại encoder:
             -movflags +faststart                                  `
             "$OutputFile"
         Write-Host;
+        if ($LASTEXITCODE -ne 0) 
+        {
+            return $false;
+        }
     }
+    return $true;
 }
