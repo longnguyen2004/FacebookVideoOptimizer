@@ -1,31 +1,24 @@
+. $PSScriptRoot/Get-Choice.ps1;
+
 function GetEncoderSettings-Software
 {
-    $ValidPresets = @{
-        "ultrafast" = "";
-        "superfast" = "";
-        "veryfast"  = "";
-        "faster"    = "";
-        "fast"      = "";
-        "medium"    = "";
-        "slow"      = "";
-        "slower"    = "";
-        "veryslow"  = "";
-    }
+    $ValidPresets = @(
+        "ultrafast",
+        "superfast",
+        "veryfast",
+        "faster",
+        "fast",
+        "medium",
+        "slow",
+        "slower",
+        "veryslow"
+    );
     Write-Host @"
-Danh sách preset: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow
 Cách chọn preset:
     - Máy yếu: veryfast hoặc faster
     - Máy mạnh: medium hoặc slow
 "@
-    do
-    {
-        $Preset = Read-Host -Prompt "Vui lòng chọn preset (bỏ trống để chọn medium)";
-        if ($Preset -eq "")
-        {
-            $Preset = "medium";
-        }
-    }
-    while (-not $ValidPresets.ContainsKey($Preset));
+    $Preset = Get-Choice -Prompt "Vui lòng chọn preset" -Choices $ValidPresets -Default "medium";
 
     Write-Host @"
 

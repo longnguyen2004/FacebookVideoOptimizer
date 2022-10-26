@@ -1,3 +1,5 @@
+. $PSScriptRoot/Get-Choice.ps1;
+
 function GetEncoderSettings-Hardware {
     Write-Host @"
 Chọn GPU bạn có
@@ -5,7 +7,7 @@ Chọn GPU bạn có
 2. AMD
 3. Intel
 "@;
-    $GPU = [int](Read-Host -Prompt "Choice");
+    $GPU = [int](Get-Choice -Choices 1, 2, 3);
     Write-Host;
     switch ($GPU) {
         1 {

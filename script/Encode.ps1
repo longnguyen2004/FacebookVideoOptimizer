@@ -1,3 +1,5 @@
+. $PSScriptRoot/Get-Choice.ps1;
+
 function Encode {
     param(
         [string] $InputFile,
@@ -11,7 +13,7 @@ Chọn loại encoder:
 1. CPU (chậm hơn, chất lượng cao hơn)
 2. GPU (nhanh hơn, chất lượng thấp hơn)
 "@
-    $EncoderType = [int](Read-Host -Prompt "Choice (1, 2)");
+    $EncoderType = [int](Get-Choice -Choices 1, 2 -Default 1);
     Write-Host;
     switch ($EncoderType)
     {
