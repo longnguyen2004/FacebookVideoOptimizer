@@ -13,7 +13,7 @@ Chọn GPU bạn có
         1 {
             Write-Host @"
 Sử dụng NVIDIA NVENC để encode
-Rate control: CQ + Bitrate Limit
+Rate control: VBR High Quality
 "@;
             return @{
                 "Encoder"     = "h264_nvenc";
