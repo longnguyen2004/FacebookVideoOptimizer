@@ -11,7 +11,7 @@ function Encode {
     Write-Host @"
 Chọn loại encoder:
 1. CPU (chậm hơn, chất lượng cao hơn)
-2. GPU (nhanh hơn, chất lượng thấp hơn)
+2. GPU (nhanh hơn, chất lượng thấp hơn, video sẽ bị scale xuống 720p)
 "@
     $EncoderType = [int](Get-Choice -Choices 1, 2 -Default 1);
     Write-Host;

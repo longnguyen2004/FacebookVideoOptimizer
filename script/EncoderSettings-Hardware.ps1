@@ -19,6 +19,7 @@ Rate control: CQ + Bitrate Limit
                 "Encoder"     = "h264_nvenc";
                 "2Pass"       = $false;
                 "CommonParam" = (
+                    "-vf"          , "scale=-1:'min(720,ih)'",
                     "-multipass"   , "2",
                     "-rc-lookahead", "200",
                     "-spatial_aq"  , "1",
@@ -41,6 +42,7 @@ Rate control: VBR + Pre-Analysis
                 "Encoder"     = "h264_amf";
                 "2Pass"       = $false;
                 "CommonParam" = (
+                    "-vf"         , "scale=-1:'min(720,ih)'",
                     "-quality"    , "quality",
                     "-rc"         , "vbr_peak",
                     "-vbaq"       , "1",
@@ -60,9 +62,9 @@ Rate control: LA_VBR
                 "Encoder"     = "h264_qsv";
                 "2Pass"       = $false;
                 "CommonParam" = (
+                    "-vf"              , "scale=-1:'min(720,ih)'",
                     "-preset"          , "veryslow",
                     "-rdo"             , "1",
-                    "-p_strategy"      , "2",
                     "-b_strategy"      , "1",
                     "-look_ahead"      , "1",
                     "-look_ahead_depth", "100"
