@@ -27,9 +27,8 @@ Preset: $Preset
 Rate control: 2-pass VBR
 "@;
 
-    return @{
+    return [PSCustomObject]@{
         "Encoder"     = "libx264";
-        "2Pass"       = $true;
         "2PassParam"  = ("-pass", "1"), ("-pass", "2");
         "CommonParam" = (
             "-aq-mode"     , "3",

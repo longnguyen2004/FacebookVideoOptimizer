@@ -30,7 +30,7 @@ Chọn loại encoder:
     Write-Host "Bitrate: ${VideoBitrate}kbps (video) + ${AudioBitrate}kbps (audio)";
     Write-Host "Cài đặt encoder: $CommonParam`n";
 
-    if ($EncoderSettings["2Pass"])
+    if ($EncoderSettings["2PassParamgit "])
     {
         $Pass1Param = $EncoderSettings["2PassParam"][0];
         $Pass2Param = $EncoderSettings["2PassParam"][1];

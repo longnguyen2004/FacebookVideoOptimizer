@@ -15,9 +15,8 @@ Chọn GPU bạn có
 Sử dụng NVIDIA NVENC để encode
 Rate control: VBR High Quality
 "@;
-            return @{
+            return [PSCustomObject]@{
                 "Encoder"     = "h264_nvenc";
-                "2Pass"       = $false;
                 "CommonParam" = (
                     "-vf"          , "scale=-1:'min(720,ih)'",
                     "-multipass"   , "2",
@@ -38,9 +37,8 @@ Rate control: VBR High Quality
 Sử dụng AMD AMF để encode
 Rate control: VBR + Pre-Analysis
 "@;
-            return @{
+            return [PSCustomObject]@{
                 "Encoder"     = "h264_amf";
-                "2Pass"       = $false;
                 "CommonParam" = (
                     "-vf"         , "scale=-1:'min(720,ih)'",
                     "-quality"    , "quality",
@@ -58,9 +56,8 @@ Rate control: VBR + Pre-Analysis
 Sử dụng Intel QuickSync để encode
 Rate control: LA_VBR
 "@;
-            return @{
+            return [PSCustomObject]@{
                 "Encoder"     = "h264_qsv";
-                "2Pass"       = $false;
                 "CommonParam" = (
                     "-vf"              , "scale=-1:'min(720,ih)'",
                     "-preset"          , "veryslow",
