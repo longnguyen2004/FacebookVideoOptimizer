@@ -25,15 +25,14 @@ Chọn loại encoder:
         }
     }
 
-    $Encoder = $EncoderSettings["Encoder"];
-    $CommonParam = $EncoderSettings["CommonParam"];
+    $Encoder = $EncoderSettings.Encoder;
+    $CommonParam = $EncoderSettings.CommonParam;
     Write-Host "Bitrate: ${VideoBitrate}kbps (video) + ${AudioBitrate}kbps (audio)";
     Write-Host "Cài đặt encoder: $CommonParam`n";
 
-    if ($EncoderSettings["2PassParamgit "])
+    if ($EncoderSettings."2PassParam")
     {
-        $Pass1Param = $EncoderSettings["2PassParam"][0];
-        $Pass2Param = $EncoderSettings["2PassParam"][1];
+        $Pass1Param, $Pass2Param = $EncoderSettings."2PassParam";
         Write-Host "Pass 1:";
         & "$FFmpeg" -y -i "$InputFile" `
             -hide_banner -loglevel $LogLevel -stats -fps_mode cfr `
