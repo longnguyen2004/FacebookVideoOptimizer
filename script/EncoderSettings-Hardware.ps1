@@ -1,16 +1,45 @@
 . $PSScriptRoot/Get-Choice.ps1;
 
 function GetEncoderSettings-Hardware {
-    Write-Host @"
-Chọn GPU bạn có
-1. NVIDIA
-2. AMD
-3. Intel
-"@;
-    $GPU = [int](Get-Choice -Choices 1, 2, 3);
+    function DetectGPU-Windows
+    {
+        $WmiOutput = Get-CimInstance win32_VideoController | Select-Object -ExpandProperty Name;
+        $GPUSupported = @();
+        foreach ($GPUName in $WmiOutput)
+        {
+            if ($GPUName -like "NVIDIA*" -and "NVIDIA" -notin $GPUSupported)
+            {
+                $GPUSupported += "NVIDIA";
+            }
+            elseif ($GPUName -like "AMD*" -and "AMD" -notin $GPUSupported)
+            {
+                $GPUSupported += "AMD";
+            }
+            elseif ($GPUName -like "Intel*" -and "Intel" -notin $GPUSupported)
+            {
+                $GPUSupported += "Intel";
+            }
+        }
+        return $GPUSupported;
+    }
+
+    if ($IsWindows)
+    {
+        $GPUSupported = DetectGPU-Windows;
+    }
+    if ($GPUSupported.Length -eq 1)
+    {
+        $GPU = $GPUSupported[0];
+    }
+    else
+    {
+        Write-Host "Chọn GPU bạn muốn sử dụng";
+        $GPUSupported | % { $i = 1 } { Write-Host "${i}: $_"; $i++ }
+        $GPU = $GPUSupported[[int](Get-Choice -Choices $(1..($GPUSupported.Length))) - 1];   
+    }
     Write-Host;
     switch ($GPU) {
-        1 {
+        "NVIDIA" {
             Write-Host @"
 Sử dụng NVIDIA NVENC để encode
 Rate control: VBR High Quality
@@ -32,7 +61,7 @@ Rate control: VBR High Quality
                 )
             }
         }
-        2 {
+        "AMD" {
             Write-Host @"
 Sử dụng AMD AMF để encode
 Rate control: VBR + Pre-Analysis
@@ -51,7 +80,7 @@ Rate control: VBR + Pre-Analysis
                 )
             }
         }
-        3 {
+        "Intel" {
             Write-Host @"
 Sử dụng Intel QuickSync để encode
 Rate control: LA_VBR
