@@ -3,7 +3,9 @@
 function GetEncoderSettings-Hardware {
     function DetectGPU-Windows
     {
-        $WmiOutput = Get-CimInstance win32_VideoController | Select-Object -ExpandProperty Name;
+        $WmiOutput = Get-CimInstance win32_VideoController `
+            | Where-Object Status -eq "OK"                 `
+            | Select-Object -ExpandProperty Name;          `
         $GPUSupported = @();
         foreach ($GPUName in $WmiOutput)
         {
@@ -25,7 +27,7 @@ function GetEncoderSettings-Hardware {
 
     if ($IsWindows)
     {
-        $GPUSupported = DetectGPU-Windows;
+        $GPUSupported = @(DetectGPU-Windows);
     }
     if ($GPUSupported.Length -eq 1)
     {
