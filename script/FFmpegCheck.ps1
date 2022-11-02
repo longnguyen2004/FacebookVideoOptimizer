@@ -30,7 +30,7 @@ else
         Write-Host "Đang tải $Link";
         Invoke-WebRequest $Link -OutFile "$ArchivePath";
         Write-Host "Đang giải nén";
-        Expand-Archive "$ArchivePath" -DestinationPath "$Env:Temp";
+        Expand-Archive "$ArchivePath" -DestinationPath "$Env:Temp" -Force;
         Move-Item (Join-Path "$Env:Temp" "$FolderName" "bin" "ff*") "$FFmpegDir"
     }
     elseif ($IsMacOS)
