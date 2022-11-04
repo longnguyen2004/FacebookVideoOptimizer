@@ -57,4 +57,7 @@ File output: $OutputFile
     {
         Write-Host "Xử lý thất bại!`n";
     }
+    Write-Host "Bấm Enter để tiếp tục...";
+    Read-Host;
+    Clear-Host;
 }
