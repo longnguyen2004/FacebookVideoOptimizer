@@ -49,7 +49,6 @@ Rate control: VBR High Quality
             return [PSCustomObject]@{
                 "Encoder"     = "h264_nvenc";
                 "CommonParam" = (
-                    "-vf"          , "scale=-1:'min(720,ih)'",
                     "-multipass"   , "2",
                     "-rc-lookahead", "200",
                     "-spatial_aq"  , "1",
@@ -71,7 +70,6 @@ Rate control: VBR + Pre-Analysis
             return [PSCustomObject]@{
                 "Encoder"     = "h264_amf";
                 "CommonParam" = (
-                    "-vf"         , "scale=-1:'min(720,ih)'",
                     "-quality"    , "quality",
                     "-rc"         , "vbr_peak",
                     "-vbaq"       , "1",
@@ -79,7 +77,7 @@ Rate control: VBR + Pre-Analysis
                     "-coder"      , "cabac",
                     "-maxrate:v"  , "5M",
                     "-bufsize:v"  , "10M"
-                )
+                ) 
             }
         }
         "Intel" {
@@ -90,7 +88,6 @@ Rate control: LA_VBR
             return [PSCustomObject]@{
                 "Encoder"     = "h264_qsv";
                 "CommonParam" = (
-                    "-vf"              , "scale=-1:'min(720,ih)'",
                     "-preset"          , "veryslow",
                     "-rdo"             , "1",
                     "-b_strategy"      , "1",

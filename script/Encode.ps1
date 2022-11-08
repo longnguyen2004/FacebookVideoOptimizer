@@ -10,8 +10,8 @@ function Encode-Video {
 
     Write-Host @"
 Chọn loại encoder:
-1. CPU (chậm hơn, chất lượng cao hơn)
-2. GPU (nhanh hơn, chất lượng thấp hơn, video sẽ bị scale xuống 720p)
+1. CPU (chậm hơn, chất lượng cao hơn, giới hạn: 1080p120)
+2. GPU (nhanh hơn, chất lượng thấp hơn, giới hạn: 720p60)
 "@
     $EncoderType = [int](Get-Choice -Choices 1, 2 -Default 1);
     Write-Host;
@@ -20,9 +20,11 @@ Chọn loại encoder:
     {
         1 {
             $EncoderSettings = GetEncoderSettings-Software;
+            $VideoFilters = @("scale=-1:'min(1080, ih)'","fps='min(120, source_fps)'")
         }
         2 {
             $EncoderSettings = GetEncoderSettings-Hardware;
+            $VideoFilters = @("scale=-1:'min(720, ih)'","fps='min(60, source_fps)'")
         }
     }
 
@@ -31,7 +33,8 @@ Chọn loại encoder:
     Write-Host;
     Write-Host "Đang xử lý video...";
     Write-Host "Bitrate: ${VideoBitrate}kbps";
-    Write-Host "Cài đặt encoder: $CommonParam`n";
+    Write-Host "Cài đặt encoder: $CommonParam";
+    Write-Host "Video filter: $($VideoFilters -join ", ")`n"
 
     if ($EncoderSettings."2PassParam")
     {
@@ -40,6 +43,7 @@ Chọn loại encoder:
         & "$FFmpeg" `
             -hide_banner -loglevel $LogLevel -stats `
             -y -i "$InputFile" -fps_mode cfr        `
+            -vf ($VideoFilters -join ",")           `
             -c:v $Encoder -b:v "${VideoBitrate}k"   `
             @CommonParam @Pass1Param                `
             -an -f null ($IsWindows ? "NUL" : "/dev/null")
@@ -53,6 +57,7 @@ Chọn loại encoder:
         & "$FFmpeg" `
             -hide_banner -loglevel $LogLevel -stats `
             -y -i "$InputFile" -fps_mode cfr        `
+            -vf ($VideoFilters -join ",")           `
             -c:v $Encoder -b:v "${VideoBitrate}k"   `
             @CommonParam @Pass2Param                `
             -an "$OutputFile"
@@ -68,6 +73,7 @@ Chọn loại encoder:
         & "$FFmpeg" `
             -hide_banner -loglevel $LogLevel -stats `
             -y -i "$InputFile" -fps_mode cfr        `
+            -vf ($VideoFilters -join ",")           `
             -c:v $Encoder -b:v "${VideoBitrate}k"   `
             @CommonParam                            `
             -an "$OutputFile"
