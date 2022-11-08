@@ -90,7 +90,7 @@ function Encode-Audio {
     & "$FFmpeg" -y -i "$InputFile" `
         -hide_banner -loglevel $LogLevel -stats `
         -c:a aac -b:a "${AudioBitrate}k"        `
-        -af "lowpass=f=16000:r=f64"             `
+        -af "lowpass=f=16000:r=f64,dynaudnorm"  `
         -vn "$OutputFile"
     Write-Host;
     return ($LASTEXITCODE -eq 0);
