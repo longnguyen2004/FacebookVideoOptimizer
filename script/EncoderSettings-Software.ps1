@@ -37,7 +37,8 @@ Rate control: 2-pass VBR
             "-rc-lookahead", "100",
             "-direct-pred" , "3",
             "-x264-params" , "trellis=2",
-            "-preset"      , $Preset
+            "-preset"      , $Preset,
+            "-bufsize"     , "5M"
         )
     }
 }
