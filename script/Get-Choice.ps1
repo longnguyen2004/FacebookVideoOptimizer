@@ -14,7 +14,7 @@ function Get-Choice {
     }
     if ($Default)
     {
-        $Prompt += " (bỏ trống = $Default)";
+        $Prompt += " (mặc định: $Default)";
     }
     do
     {
