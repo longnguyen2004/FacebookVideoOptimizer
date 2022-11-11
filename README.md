@@ -19,16 +19,38 @@ Bấm Code -> Download ZIP ở góc trên bên phải
 
 ## Yêu cầu
 
-- PowerShell ([Windows][1], [macOS][2], [Linux][3])
+- (Windows) Visual C++ Redistributable ([AIO][vc++-aio])
+- PowerShell ([Windows][pwsh-win], [macOS][pwsh-macos], [Linux][pwsh-linux])
+- Note:
+  - Windows 7: Bản hỗ trợ cuối cùng của PowerShell 7 là 7.2.7 (WYSI!). Tải bản này tại đây ([32][pwsh-7.2.7-32], [64][pwsh-7.2.7-64])
 
-[1]: https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows#msi
-[2]: https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos
-[3]: https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux
+[vc++-aio]: https://github.com/abbodi1406/vcredist/releases
+[pwsh-win]: https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows#msi
+[pwsh-macos]: https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos
+[pwsh-linux]: https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux
+[pwsh-7.2.7-32]: https://github.com/PowerShell/PowerShell/releases/download/v7.2.7/PowerShell-7.2.7-win-x86.msi
+[pwsh-7.2.7-64]: https://github.com/PowerShell/PowerShell/releases/download/v7.2.7/PowerShell-7.2.7-win-x64.msi
 
 ## Cách sử dụng
 
 - Windows: Chạy `run.bat` và làm theo hướng dẫn
-- macOS & Linux (soon): Chạy `run.sh` và làm theo hướng dẫn
+- macOS (soon) & Linux: Chạy `run.sh` và làm theo hướng dẫn
+
+## Lưu ý về font của console
+
+Nếu bạn thấy thông báo này
+
+![Cảnh báo về font](/docs/change_console_font/warning.png?raw=true)
+
+Bạn đang sử dụng Windows 7/8/8.1, và cần thay đổi font của console trước khi tiếp tục. Hãy thực hiện các bước dưới đây:
+
+1. Nhấp phải vào thanh tiêu đề, chọn Properties
+
+![Đổi font - hình 1](/docs/change_console_font/1.png?raw=true)
+
+2. Chọn một trong 2 font Consolas hoặc Lucida Console, sau đó nhấn OK
+
+![Đổi font - hình 2](/docs/change_console_font/2.png?raw=true)
 
 ## Why?
 
