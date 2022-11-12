@@ -1,5 +1,7 @@
 # Facebook Video Optimizer
 
+_Looking for English? Click [here](/README.en.md)!_
+
 ## Tip để record chất lượng cao
 
 Không bao giờ sử dụng CBR hoặc VBR cho record. Những mode này không điều chỉnh bitrate tương ứng với video, nên sẽ gây thừa bitrate với video đơn giản (osu!,...) và thiếu bitrate với video phức tạp (Geometry Dash,...)
@@ -59,6 +61,8 @@ Những video quay màn hình thường sẽ có bitrate cao, do tính chất c�
 ## How?
 
 Bằng cách sử dụng x264 với chế độ 2-pass VBR, video sẽ được encode lại với bitrate 1800kbps (video) + 128kbps (audio), giữ được chất lượng cao nhất có thể trong giới hạn của Facebook.
+
+Ngoài ra, bạn cũng có thể sử dụng hardware encoder, nhưng chất lượng sẽ không cao bằng x264.
 
 ## Lưu ý
 
