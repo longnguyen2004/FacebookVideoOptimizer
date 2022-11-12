@@ -35,8 +35,8 @@ Click Code -> Download ZIP on the upper right corner
 
 ## How to run
 
-- Windows: Run `run.bat` and follow the instructions
-- macOS (soon) & Linux: Run `run.sh` and follow the instructions
+- Windows: Run `run.en.bat` and follow the instructions
+- macOS (soon) & Linux: Run `run.en.sh` and follow the instructions
 
 ## Note about console font
 

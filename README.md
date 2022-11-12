@@ -35,8 +35,8 @@ Bấm Code -> Download ZIP ở góc trên bên phải
 
 ## Cách sử dụng
 
-- Windows: Chạy `run.bat` và làm theo hướng dẫn
-- macOS (soon) & Linux: Chạy `run.sh` và làm theo hướng dẫn
+- Windows: Chạy `run.vi.bat` và làm theo hướng dẫn
+- macOS (soon) & Linux: Chạy `run.vi.sh` và làm theo hướng dẫn
 
 ## Lưu ý về font của console
 
