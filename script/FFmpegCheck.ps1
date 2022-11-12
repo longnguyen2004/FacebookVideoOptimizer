@@ -31,7 +31,8 @@ else
         Invoke-WebRequest $Link -OutFile "$ArchivePath";
         Write-Host "Đang giải nén";
         Expand-Archive "$ArchivePath" -DestinationPath "$Env:Temp" -Force;
-        Move-Item (Join-Path "$Env:Temp" "$FolderName" "bin" "ff*") "$FFmpegDir"
+        Move-Item (Join-Path "$Env:Temp" "$FolderName" "bin" "ff*") "$FFmpegDir";
+        Remove-Item (Join-Path "$Env:Temp" "$FolderName") -Recurse -Force;
     }
     elseif ($IsMacOS)
     {
@@ -47,8 +48,9 @@ else
         Invoke-WebRequest $Link -OutFile "$ArchivePath";
         Write-Host "Đang giải nén";
         tar -xf $ArchivePath -C "/tmp";
-        Move-Item "/tmp/ffmpeg-master-latest-linux64-gpl/bin/ff*" "$FFmpegDir"
+        Move-Item "/tmp/ffmpeg-master-latest-linux64-gpl/bin/ff*" "$FFmpegDir";
+        Remove-Item "/tmp/ffmpeg-master-latest-linux64-gpl" -Recurse -Force;
     }
-    $FFmpeg = Join-Path "$FFmpegDir" "ffmpeg"
-    Write-Host "Đã tải xong`n"
+    $FFmpeg = Join-Path "$FFmpegDir" "ffmpeg";
+    Write-Host "Đã tải xong`n";
 }
