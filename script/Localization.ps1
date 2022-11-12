@@ -146,4 +146,72 @@ File output: {0}
         "Failed" = "Xử lý thất bại!";
         "EnterToContinue" = "Bấm Enter để tiếp tục...";
     };
+	
+	"zh" = @{
+# Encoder settings prompts
+		"EncoderType" = @"
+选择编码器类型:
+1. CPU (速度慢，高质量，限制: 1080p120)
+2. GPU (速度快，低质量，限制: 720p60)
+"@;
+		"EncoderSettings" = "编码器设置： {0}";
+		"GPUSelect" = "选择您要使用的 GPU:";
+		"x264Presets" = @"
+请选择预设
+指导:
+- 弱电脑：使用 "veryfast" 或 "faster"
+- 强大的电脑：使用 "medium" 或 "slow"
+"@;
+
+# Encoder info
+		"x264Info" = @"
+使用 libx264 进行编码
+Preset: {0}
+Rate control: 2-pass VBR
+"@;
+		"NVENCInfo" = @"
+使用 NVIDIA NVENC 进行编码
+Rate control: VBR High Quality
+"@;
+		"AMFInfo" = @"
+使用 AMD AMF 进行编码
+Rate control: VBR + Pre-Analysis
+"@;
+		"QSInfo" = @"
+使用 Intel QuickSync 进行编码
+Rate control: LA_VBR
+"@;
+
+# Processing text
+		"ProcessingAudio" = "正在处理音频...";
+		"ProcessingVideo" = "正在处理视频...";
+		"Muxing" = "多路复用...";
+		"Bitrate" = "Bitrate: {0}kbps";
+		"VideoFilters" = "视频过滤器: {0}";
+		"Pass1" = "Pass 1:";
+		"Pass2" = "Pass 2:";
+		
+# Get-Choice strings
+		"Choice" = "选择";
+		"Default" = "默认";
+
+# FFmpeg checks
+		"FFmpegSystem" = "在{0}处使用系统 FFmpeg";
+		"FFmpegLocal" = "使用当地的FFmpeg";
+		"FFmpegNotFound" = "未找到 FFmpeg";
+		"FFmpegDownloading" = "下载 FFmpeg {0}";
+		"FFmpegExtracting" = "提取";
+		"FFmpegFinished" = "下载完成";
+		
+# Main program
+		"DebugMode" = "调试模式已激活. FFmpeg 将导出额外的视频信息.";
+		"VideoPathPrompt" = "视频路径（允许拖放）";
+		"InvalidPath" = "无效路径!";
+		"Finished" = @"
+处理完毕！
+输出文件: {0}
+"@;
+		"Failed" = "处理失败!";
+		"EnterToContinue" = "按 Enter 继续...";
+	};
 }
