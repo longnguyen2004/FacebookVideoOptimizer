@@ -1,5 +1,7 @@
 @echo off
 setlocal
+
+REM Note: Do not translate this!
 REM Windows version detection
 for /f "tokens=4-7 delims=[.] " %%i in ('ver') do (if %%i==Version (set v=%%j.%%k) else (set v=%%i.%%j))
 if "%v%" NEQ "10.0" (
@@ -8,13 +10,14 @@ if "%v%" NEQ "10.0" (
     @echo Please change the font before continuing
     pause
 )
+
 chcp 65001 >nul
 where /q pwsh
 if %ERRORLEVEL% NEQ 0 (
-    @echo Không tìm thấy PowerShell. Script này yêu cầu PowerShell 7 trở lên
-    @echo Vui lòng truy cập https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows#msi
+    @echo PowerShell not found. This script requires PowerShell 7+
+    @echo Please visit https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows#msi
     pause && exit
 )
-pwsh -ExecutionPolicy Bypass -File "%~dp0\script\Main.ps1" %*
+pwsh -ExecutionPolicy Bypass -File "%~dp0\script\Main.ps1" -Language en %*
 pause
 endlocal

@@ -35,17 +35,14 @@ function GetEncoderSettings-Hardware {
     }
     else
     {
-        Write-Host "Chọn GPU bạn muốn sử dụng";
+        Write-Host $Strings["GPUSelect"];
         $GPUSupported | % { $i = 1 } { Write-Host "${i}: $_"; $i++ }
         $GPU = $GPUSupported[[int](Get-Choice -Choices $(1..($GPUSupported.Length))) - 1];   
     }
     Write-Host;
     switch ($GPU) {
         "NVIDIA" {
-            Write-Host @"
-Sử dụng NVIDIA NVENC để encode
-Rate control: VBR High Quality
-"@;
+            Write-Host $Strings["NVENCInfo"]
             return [PSCustomObject]@{
                 "Encoder"     = "h264_nvenc";
                 "CommonParam" = (
@@ -63,10 +60,7 @@ Rate control: VBR High Quality
             }
         }
         "AMD" {
-            Write-Host @"
-Sử dụng AMD AMF để encode
-Rate control: VBR + Pre-Analysis
-"@;
+            Write-Host $Strings["AMFInfo"]
             return [PSCustomObject]@{
                 "Encoder"     = "h264_amf";
                 "CommonParam" = (
@@ -81,10 +75,7 @@ Rate control: VBR + Pre-Analysis
             }
         }
         "Intel" {
-            Write-Host @"
-Sử dụng Intel QuickSync để encode
-Rate control: LA_VBR
-"@;
+            Write-Host $Strings["QSInfo"]
             return [PSCustomObject]@{
                 "Encoder"     = "h264_qsv";
                 "CommonParam" = (

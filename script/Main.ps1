@@ -1,20 +1,29 @@
 param(
-    [switch] $Debug
+    [switch] $Debug,
+    [string] $Language = "vi"
 )
+
+. $PSScriptRoot/Localization.ps1
+
+if (-not $Translation.ContainsKey($Language))
+{
+    throw "Unrecognized language: $Language";
+}
+$Strings = $Translation[$Language];
 
 . $PSScriptRoot/FFmpegCheck.ps1
 . $PSScriptRoot/Encode.ps1
 
 if ($Debug)
 {
-    Write-Host "Đã kích hoạt chế độ debug. FFmpeg sẽ hiển thị thêm thông tin về video."
+    Write-Host $Strings["DebugMode"];
 }
 
 $LogLevel = $Debug ? "verbose" : "error";
 
 while ($true)
 {
-    $InputFile = Read-Host "Đường dẫn đến file video cần xử lý (có thể kéo thả)";
+    $InputFile = Read-Host $Strings["VideoPathPrompt"];
     if (-not $InputFile)
     {
         Write-Host;
@@ -34,7 +43,7 @@ while ($true)
 
     if (-not (Test-Path $InputFile -PathType Leaf))
     {
-        Write-Error "Đường dẫn không hợp lệ!";
+        Write-Error $Strings["InvalidPath"];
         continue;
     }
     Write-Host;
@@ -45,19 +54,9 @@ while ($true)
     $OutputFile = Join-Path (Split-Path -Parent $InputFile) ((Split-Path -LeafBase $InputFile) + " (transcode).mp4");
 
     $Success = Encode "$InputFile" "$OutputFile";
-    if ($Success)
-    {
-        Write-Host @"
-Đã hoàn tất
-File output: $OutputFile
-
-"@;
-    }
-    else
-    {
-        Write-Host "Xử lý thất bại!`n";
-    }
-    Write-Host "Bấm Enter để tiếp tục...";
+    Write-Host ($Success ? ($Strings["Finished"] -f $OutputFile) : $Strings["Failed"]);
+    Write-Host;
+    Write-Host $Strings["EnterToContinue"];
     Read-Host;
     Clear-Host;
 }

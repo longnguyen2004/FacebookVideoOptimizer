@@ -1,6 +1,6 @@
 function Get-Choice {
     param(
-        [string]   $Prompt = "Choice",
+        [string]   $Prompt = $Strings["Choice"],
         [object[]] $Choices,
         [object]   $Default
     )
@@ -14,7 +14,7 @@ function Get-Choice {
     }
     if ($Default)
     {
-        $Prompt += " (mặc định: $Default)";
+        $Prompt += " ($($Strings["Default"]): $Default)";
     }
     do
     {

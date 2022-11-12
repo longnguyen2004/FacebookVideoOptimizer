@@ -13,19 +13,11 @@ function GetEncoderSettings-Software
         "slower",
         "veryslow"
     );
-    Write-Host @"
-Cách chọn preset:
-    - Máy yếu: veryfast hoặc faster
-    - Máy mạnh: medium hoặc slow
-"@
-    $Preset = Get-Choice -Prompt "Vui lòng chọn preset" -Choices $ValidPresets -Default "medium";
+    Write-Host $Strings["x264Presets"];
+    $Preset = Get-Choice -Choices $ValidPresets -Default "medium";
 
-    Write-Host @"
-
-Sử dụng libx264 để encode
-Preset: $Preset
-Rate control: 2-pass VBR
-"@;
+    Write-Host;
+    Write-Host ($Strings["x264Info"] -f $Preset)
 
     return [PSCustomObject]@{
         "Encoder"     = "libx264";

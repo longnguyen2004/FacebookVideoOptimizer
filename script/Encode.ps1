@@ -8,11 +8,7 @@ function Encode-Video {
     . $PSScriptRoot/EncoderSettings-Software.ps1;
     . $PSScriptRoot/EncoderSettings-Hardware.ps1;
 
-    Write-Host @"
-Chọn loại encoder:
-1. CPU (chậm hơn, chất lượng cao hơn, giới hạn: 1080p120)
-2. GPU (nhanh hơn, chất lượng thấp hơn, giới hạn: 720p60)
-"@
+    Write-Host $Strings["EncoderType"];
     $EncoderType = [int](Get-Choice -Choices 1, 2 -Default 1);
     Write-Host;
 
@@ -31,15 +27,17 @@ Chọn loại encoder:
     $Encoder = $EncoderSettings.Encoder;
     $CommonParam = $EncoderSettings.CommonParam;
     Write-Host;
-    Write-Host "Đang xử lý video...";
-    Write-Host "Bitrate: ${VideoBitrate}kbps";
-    Write-Host "Cài đặt encoder: $CommonParam";
-    Write-Host "Video filter: $($VideoFilters -join ", ")`n"
+
+    Write-Host $Strings["ProcessingVideo"];
+    Write-Host ($Strings["Bitrate"] -f $VideoBitrate);
+    Write-Host ($Strings["EncoderSettings"] -f ($CommonParam -join " "));
+    Write-Host ($Strings["VideoFilters"] -f $VideoFilters -join ", ");
+    Write-Host;
 
     if ($EncoderSettings."2PassParam")
     {
         $Pass1Param, $Pass2Param = $EncoderSettings."2PassParam";
-        Write-Host "Pass 1:";
+        Write-Host $Strings["Pass1"];
         & "$FFmpeg" `
             -hide_banner -loglevel $LogLevel -stats `
             -y -i "$InputFile" -fps_mode cfr        `
@@ -53,7 +51,7 @@ Chọn loại encoder:
             return $false;
         }
 
-        Write-Host "Pass 2:"
+        Write-Host $Strings["Pass2"];
         & "$FFmpeg" `
             -hide_banner -loglevel $LogLevel -stats `
             -y -i "$InputFile" -fps_mode cfr        `
@@ -91,8 +89,8 @@ function Encode-Audio {
         [string] $InputFile,
         [string] $OutputFile
     )
-    Write-Host "Đang xử lý audio...";
-    Write-Host "Bitrate: ${AudioBitrate}kbps";
+    Write-Host $Strings["ProcessingAudio"];
+    Write-Host ($Strings["Bitrate"] -f $AudioBitrate);
     & "$FFmpeg" -y -i "$InputFile" `
         -hide_banner -loglevel $LogLevel -stats `
         -c:a aac -b:a "${AudioBitrate}k"        `
@@ -116,7 +114,7 @@ function Encode {
     $AudioResult = Encode-Audio $InputFile $AudioFile;
     if (-not $AudioResult) { return $false };
 
-    Write-Host "Muxing...";
+    Write-Host $Strings["Muxing"];
     & "$FFmpeg" `
         -y -hide_banner -loglevel $LogLevel -stats `
         -i "$VideoFile" -i "$AudioFile"            `
