@@ -1,6 +1,7 @@
 # Facebook Video Optimizer
 
 _Looking for English? Click [here](/README.en.md)!_
+_寻找中文？ 点击[这里](/README.zh.md)!_
 
 ## Tip để record chất lượng cao
 

@@ -1,7 +1,5 @@
 # Facebook Video Optimizer
 
-_Bạn cần tiếng Việt? Nhấp vào [đây](/README.md)!_
-
 ## Tips for high quality recordings
 
 Never use CBR or VBR for recording. These modes don't adapt the bitrate to the video, which will waste bitrate for simple content (osu!,...) and starve bitrate for complex content (Geometry Dash,...)
