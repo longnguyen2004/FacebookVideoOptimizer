@@ -31,7 +31,7 @@ function Encode-Video {
     Write-Host $Strings["ProcessingVideo"];
     Write-Host ($Strings["Bitrate"] -f $VideoBitrate);
     Write-Host ($Strings["EncoderSettings"] -f ($CommonParam -join " "));
-    Write-Host ($Strings["VideoFilters"] -f $VideoFilters -join ", ");
+    Write-Host ($Strings["VideoFilters"] -f ($VideoFilters -join ", "));
     Write-Host;
 
     if ($EncoderSettings."2PassParam")
