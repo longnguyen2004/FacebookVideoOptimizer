@@ -30,7 +30,8 @@ function GetEncoderSettings-Software
             "-direct-pred" , "3",
             "-x264-params" , "trellis=2",
             "-preset"      , $Preset,
-            "-bufsize"     , "5M"
+            "-bufsize"     , "5M",
+            "-maxrate"     , "10M"
         )
     }
 }
