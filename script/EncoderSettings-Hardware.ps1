@@ -56,7 +56,9 @@ function GetEncoderSettings-Hardware {
                     "-preset"      , "p7",
                     "-maxrate:v"   , "${VideoBitrate}k",
                     "-bufsize:v"   , "5M"
-                )
+                );
+                "MaxRes" = "720";
+                "MaxFps" = "60";
             }
         }
         "AMD" {
@@ -71,7 +73,9 @@ function GetEncoderSettings-Hardware {
                     "-coder"      , "cabac",
                     "-maxrate:v"  , "5M",
                     "-bufsize:v"  , "10M"
-                ) 
+                );
+                "MaxRes" = "720";
+                "MaxFps" = "60";
             }
         }
         "Intel" {
@@ -84,7 +88,9 @@ function GetEncoderSettings-Hardware {
                     "-b_strategy"      , "1",
                     "-look_ahead"      , "1",
                     "-look_ahead_depth", "100"
-                )
+                );
+                "MaxRes" = "720";
+                "MaxFps" = "60";
             }
         }
     }

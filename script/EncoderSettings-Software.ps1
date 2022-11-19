@@ -32,6 +32,8 @@ function GetEncoderSettings-Software
             "-preset"      , $Preset,
             "-bufsize"     , "5M",
             "-maxrate"     , "10M"
-        )
+        );
+        "MaxRes" = "1080";
+        "MaxFps" = "120"
     }
 }
