@@ -22,7 +22,7 @@ function Get-EncoderSettings
     $MaxRes = $EncoderSettings.MaxRes;
     $MaxFps = $EncoderSettings.MaxFps;
 
-    if ((Split-Path -PathType Extension "$InputFile") -eq ".avs")
+    if ((Split-Path -Extension "$InputFile") -eq ".avs")
     {
         $VideoFilters = (
             "scale=-2:'min(ih,$MaxRes)'",
