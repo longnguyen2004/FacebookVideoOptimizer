@@ -1,7 +1,7 @@
 . $PSScriptRoot/Get-Choice.ps1;
 
-function GetEncoderSettings-Hardware {
-    function DetectGPU-Windows
+function Get-EncoderSettings-Hardware {
+    function Find-GPU-Windows
     {
         $WmiOutput = Get-CimInstance win32_VideoController `
             | Where-Object Status -eq "OK"                 `
@@ -27,7 +27,7 @@ function GetEncoderSettings-Hardware {
 
     if ($IsWindows)
     {
-        $GPUSupported = @(DetectGPU-Windows);
+        $GPUSupported = @(Find-GPU-Windows);
     }
     if ($GPUSupported.Length -eq 1)
     {

@@ -1,6 +1,6 @@
 . $PSScriptRoot/Get-Choice.ps1;
 
-function GetEncoderSettings-Software
+function Get-EncoderSettings-Software
 {
     $ValidPresets = @(
         "ultrafast",

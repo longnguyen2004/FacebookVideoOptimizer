@@ -5,27 +5,13 @@ function Encode-Video {
         [string] $InputFile,
         [string] $OutputFile
     )
-    . $PSScriptRoot/EncoderSettings-Software.ps1;
-    . $PSScriptRoot/EncoderSettings-Hardware.ps1;
-
-    Write-Host $Strings["EncoderType"];
-    $EncoderType = [int](Get-Choice -Choices 1, 2 -Default 1);
-    Write-Host;
-
-    switch ($EncoderType)
-    {
-        1 {
-            $EncoderSettings = GetEncoderSettings-Software;
-            $VideoFilters = @("scale=-1:'min(1080, ih)'","fps='min(120, source_fps)'")
-        }
-        2 {
-            $EncoderSettings = GetEncoderSettings-Hardware;
-            $VideoFilters = @("scale=-1:'min(720, ih)'","fps='min(60, source_fps)'")
-        }
-    }
+    
+    . $PSScriptRoot/EncoderSettings.ps1
+    $EncoderSettings = Get-EncoderSettings;
 
     $Encoder = $EncoderSettings.Encoder;
     $CommonParam = $EncoderSettings.CommonParam;
+    $VideoFilters = $EncoderSettings.VideoFilters;
     Write-Host;
 
     Write-Host $Strings["ProcessingVideo"];
