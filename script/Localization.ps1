@@ -55,6 +55,9 @@ Rate control: LA_VBR
         "Pass1" = "Pass 1:";
         "Pass2" = "Pass 2:";
 
+# Video special cases
+        "GameDVR" = "Microsoft Game DVR detected, forcing 60fps output";
+
 # Get-Choice strings
         "Choice" = "Choice";
         "Default" = "Default";
@@ -123,6 +126,9 @@ Rate control: LA_VBR
         "Pass1" = "Pass 1:";
         "Pass2" = "Pass 2:";
 
+# Video special cases
+        "GameDVR" = "Video từ Microsoft Game DVR, bật force 60fps";
+
 # Get-Choice strings
         "Choice" = "Lựa chọn";
         "Default" = "Mặc định";
@@ -190,7 +196,10 @@ Rate control: LA_VBR
         "VideoFilters" = "视频过滤器: {0}";
         "Pass1" = "Pass 1:";
         "Pass2" = "Pass 2:";
-        
+
+# Video special cases
+        "GameDVR" = "Microsoft Game DVR detected, forcing 60fps output";
+
 # Get-Choice strings
         "Choice" = "选择";
         "Default" = "默认";

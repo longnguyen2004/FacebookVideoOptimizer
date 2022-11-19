@@ -7,7 +7,7 @@ function Encode-Video {
     )
     
     . $PSScriptRoot/EncoderSettings.ps1
-    $EncoderSettings = Get-EncoderSettings;
+    $EncoderSettings = Get-EncoderSettings "$InputFile";
 
     $Encoder = $EncoderSettings.Encoder;
     $CommonParam = $EncoderSettings.CommonParam;

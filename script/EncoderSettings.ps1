@@ -19,10 +19,33 @@ function Get-EncoderSettings
             $EncoderSettings = Get-EncoderSettings-Hardware;
         }
     }
-    $VideoFilters = (
-        "scale=-2:'min(ih,$($EncoderSettings.MaxRes))'",
-        "fps='min(source_fps,$($EncoderSettings.MaxFps))'"
-    )
+    $MaxRes = $EncoderSettings.MaxRes;
+    $MaxFps = $EncoderSettings.MaxFps;
+
+    if ((Split-Path -PathType Extension "$InputFile") -eq ".avs")
+    {
+        $VideoFilters = (
+            "scale=-2:'min(ih,$MaxRes)'",
+            "fps='min(source_fps, $MaxFps)'"
+        )
+    }
+    else
+    {
+        $VideoInfo = & "$FFprobe" -v quiet -print_format json -show_format -show_streams "$InputFile" | ConvertFrom-Json;
+        $VideoFilters = (,
+            "scale=-2:'min(ih,$MaxRes)'"
+        )
+        if ($VideoInfo.format.tags.artist -eq "Microsoft Game DVR")
+        {
+            Write-Host $Strings["GameDVR"];
+            $VideoFilters += "fps=60"
+        }
+        else
+        {
+            $VideoFilters += "fps='min(source_fps, $MaxFps)'"
+        }
+    }
+
     $EncoderSettings `
         | Add-Member -MemberType NoteProperty -Name VideoFilters -Value $VideoFilters
 
