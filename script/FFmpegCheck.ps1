@@ -61,7 +61,7 @@ else
         Remove-Item (Join-Path "$TempPath" "ffmpeg-master-latest-linux64-gpl") -Recurse -Force;
     }
     $FFmpeg = Join-Path "$FFmpegDir" "ffmpeg";
-    $FFmpeg = Join-Path "$FFmpegDir" "ffprobe";
+    $FFprobe = Join-Path "$FFmpegDir" "ffprobe";
     Write-Host $Strings["FFmpegFinished"];
     Write-Host;
 }
