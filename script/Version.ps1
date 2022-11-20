@@ -1,10 +1,10 @@
 $Version = 20221120
-$PatchLevel = 0
+$PatchLevel = 1
 $FullVersion = "$Version.$PatchLevel"
 
 . $PSScriptRoot/Get-Choice.ps1;
 
-Write-Host "Facebook Video Optimizer v$FullVersion" -NoNewLine;
+Write-Host "Facebook Video Optimizer v$FullVersion"
 Write-Host;
 
 $ProgressPreference = "SilentlyContinue";
