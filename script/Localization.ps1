@@ -198,7 +198,7 @@ Rate control: LA_VBR
         "Pass2" = "Pass 2:";
 
 # Video special cases
-        "GameDVR" = "Microsoft Game DVR detected, forcing 60fps output";
+        "GameDVR" = "检测到 Microsoft 游戏 DVR, 强制 60fps 输出";
 
 # Get-Choice strings
         "Choice" = "选择";
