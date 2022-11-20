@@ -80,6 +80,10 @@ Output file: {0}
 "@;
         "Failed" = "Processing failed!";
         "EnterToContinue" = "Press Enter to continue...";
+
+# Updater
+        "UpdateAvailable" = "Update available: {0}. Do you want to update?";
+        "UpdateFinished" = "Update finished, please re-run the script";
     };
     
     "vi" = @{
@@ -151,6 +155,10 @@ File output: {0}
 "@;
         "Failed" = "Xử lý thất bại!";
         "EnterToContinue" = "Bấm Enter để tiếp tục...";
+
+# Updater
+        "UpdateAvailable" = "Có phiên bản mới: {0}. Bạn có muốn nâng cấp?";
+        "UpdateFinished" = "Nâng cấp hoàn tất, vui lòng chạy lại script";
     };
 
     "zh" = @{
@@ -222,5 +230,9 @@ Rate control: LA_VBR
 "@;
         "Failed" = "处理失败!";
         "EnterToContinue" = "按 Enter 继续...";
+
+# Updater
+        "UpdateAvailable" = "新版本可用: {0}. 您要更新吗?";
+        "UpdateFinished" = "更新完成，请重启脚本."
     };
 }

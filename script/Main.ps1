@@ -11,6 +11,7 @@ if (-not $Translation.ContainsKey($Language))
 }
 $Strings = $Translation[$Language];
 
+. $PSScriptRoot/Version.ps1
 . $PSScriptRoot/FFmpegCheck.ps1
 . $PSScriptRoot/Encode.ps1
 
