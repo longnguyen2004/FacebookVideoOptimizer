@@ -23,7 +23,7 @@ function Encode-Video {
     if ($EncoderSettings."2PassParam")
     {
         $Pass1Param, $Pass2Param = $EncoderSettings."2PassParam";
-        Write-Host $Strings["Pass1"];
+        Write-Host ($Strings["CurrentPass"] -f 1,2);
         & "$FFmpeg" `
             -hide_banner -loglevel $LogLevel -stats `
             -y -i "$InputFile" -fps_mode cfr        `
@@ -37,7 +37,7 @@ function Encode-Video {
             return $false;
         }
 
-        Write-Host $Strings["Pass2"];
+        Write-Host ($Strings["CurrentPass"] -f 2,2);
         & "$FFmpeg" `
             -hide_banner -loglevel $LogLevel -stats `
             -y -i "$InputFile" -fps_mode cfr        `

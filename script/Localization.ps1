@@ -52,8 +52,7 @@ Rate control: LA_VBR
         "Muxing" = "Muxing...";
         "Bitrate" = "Bitrate: {0}kbps";
         "VideoFilters" = "Video filters: {0}";
-        "Pass1" = "Pass 1:";
-        "Pass2" = "Pass 2:";
+        "CurrentPass" = "Pass {0}/{1}:";
 
 # Video special cases
         "GameDVR" = "Microsoft Game DVR detected, forcing 60fps output";
@@ -127,8 +126,7 @@ Rate control: LA_VBR
         "Muxing" = "Muxing...";
         "Bitrate" = "Bitrate: {0}kbps";
         "VideoFilters" = "Video filter: {0}";
-        "Pass1" = "Pass 1:";
-        "Pass2" = "Pass 2:";
+        "CurrentPass" = "Pass {0}/{1}:";
 
 # Video special cases
         "GameDVR" = "Video từ Microsoft Game DVR, bật force 60fps";
@@ -202,8 +200,7 @@ Rate control: LA_VBR
         "Muxing" = "多路复用...";
         "Bitrate" = "Bitrate: {0}kbps";
         "VideoFilters" = "视频过滤器: {0}";
-        "Pass1" = "Pass 1:";
-        "Pass2" = "Pass 2:";
+        "CurrentPass" = "Pass {0}/{1}:";
 
 # Video special cases
         "GameDVR" = "检测到 Microsoft 游戏 DVR, 强制 60fps 输出";
