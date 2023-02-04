@@ -2,6 +2,9 @@
 
 function Get-EncoderSettings-Software
 {
+    param(
+        $VideoInfo
+    );
     $ValidPresets = @(
         "ultrafast",
         "superfast",
@@ -13,8 +16,27 @@ function Get-EncoderSettings-Software
         "slower",
         "veryslow"
     );
+
+    $FrameRate = Invoke-Expression $VideoInfo.r_frame_rate;
+    if ($FrameRate -le 60)
+    {
+        $DefaultPreset = "medium";
+    }
+    elseif ($FrameRate -le 75)
+    {
+        $DefaultPreset = "slow";
+    }
+    elseif ($FrameRate -le 90)
+    {
+        $DefaultPreset = "slower";
+    }
+    else
+    {
+        $DefaultPreset = "veryslow";
+    }
+
     Write-Host $Strings["x264Presets"];
-    $Preset = Get-Choice -Choices $ValidPresets -Default "medium";
+    $Preset = Get-Choice -Choices $ValidPresets -Default $DefaultPreset;
 
     Write-Host;
     Write-Host ($Strings["x264Info"] -f $Preset)
