@@ -6,6 +6,11 @@ function Get-EncoderSettings
     . $PSScriptRoot/EncoderSettings-Software.ps1;
     . $PSScriptRoot/EncoderSettings-Hardware.ps1;
 
+    $VideoInfo = & "$FFprobe" -v quiet -print_format json -show_format -show_streams "$InputFile";
+    Write-Debug "ffprobe output:";
+    Write-Debug ("`n" + (($VideoInfo | % { $_ + "`n" }) -join ""));
+    $VideoInfo = $VideoInfo | ConvertFrom-Json;
+
     Write-Host $Strings["EncoderType"];
     $EncoderType = [int](Get-Choice -Choices 1, 2 -Default 1);
     Write-Host;
