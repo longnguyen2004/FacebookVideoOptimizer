@@ -27,28 +27,13 @@ function Get-EncoderSettings
     $MaxRes = $EncoderSettings.MaxRes;
     $MaxFps = $EncoderSettings.MaxFps;
 
-    if ((Split-Path -Extension "$InputFile") -eq ".avs")
+    # Trust the user if they're using AviSynth
+    if ((Split-Path -Extension "$InputFile") -ne ".avs")
     {
         $VideoFilters = (
             "scale=-2:'min(ih,$MaxRes)'",
             "fps='min(source_fps, $MaxFps)'"
         )
-    }
-    else
-    {
-        $VideoInfo = & "$FFprobe" -v quiet -print_format json -show_format -show_streams "$InputFile" | ConvertFrom-Json;
-        $VideoFilters = (,
-            "scale=-2:'min(ih,$MaxRes)'"
-        )
-        if ($VideoInfo.format.tags.artist -eq "Microsoft Game DVR")
-        {
-            Write-Host $Strings["GameDVR"];
-            $VideoFilters += "fps=60"
-        }
-        else
-        {
-            $VideoFilters += "fps='min(source_fps, $MaxFps)'"
-        }
     }
 
     $EncoderSettings `
