@@ -6,10 +6,10 @@ function Get-EncoderSettings
     . $PSScriptRoot/EncoderSettings-Software.ps1;
     . $PSScriptRoot/EncoderSettings-Hardware.ps1;
 
-    $VideoInfo = & "$FFprobe" -v quiet -print_format json -show_format -show_streams "$InputFile";
+    $FileInfo = & "$FFprobe" -v quiet -print_format json -show_format -show_streams "$InputFile";
     Write-Debug "ffprobe output:";
-    Write-Debug ("`n" + (($VideoInfo | % { $_ + "`n" }) -join ""));
-    $VideoInfo = $VideoInfo | ConvertFrom-Json;
+    Write-Debug ("`n" + (($FileInfo | % { $_ + "`n" }) -join ""));
+    $FileInfo = $FileInfo | ConvertFrom-Json;
 
     Write-Host $Strings["EncoderType"];
     $EncoderType = [int](Get-Choice -Choices 1, 2 -Default 1);
@@ -18,10 +18,10 @@ function Get-EncoderSettings
     switch ($EncoderType)
     {
         1 {
-            $EncoderSettings = Get-EncoderSettings-Software;
+            $EncoderSettings = Get-EncoderSettings-Software $FileInfo.streams[0];
         }
         2 {
-            $EncoderSettings = Get-EncoderSettings-Hardware;
+            $EncoderSettings = Get-EncoderSettings-Hardware $FileInfo.streams[0];
         }
     }
     $MaxRes = $EncoderSettings.MaxRes;
