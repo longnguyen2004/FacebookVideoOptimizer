@@ -28,7 +28,7 @@ if ((Test-NetConnection))
             Remove-Item -Force "$ZipPath";
             Write-Host $Strings["UpdateFinished"];
             Read-Host;
-            exit;
+            [Environment]::Exit(0);
         }
     }
 }
