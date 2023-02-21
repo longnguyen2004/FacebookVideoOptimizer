@@ -65,9 +65,9 @@ Rate control: LA_VBR
         "DependencySystem" = "Using system {0} at {1}";
         "DependencyLocal" = "Using local {0}";
         "DependencyNotFound" = "{0} not found";
-        "FFmpegDownloading" = "Downloading {0}";
-        "FFmpegExtracting" = "Extracting";
-        "FFmpegFinished" = "Finished downloading";
+        "FileDownloading" = "Downloading {0}";
+        "FileExtracting" = "Extracting {0}";
+        "FileFinished" = "Finished downloading {0}";
 
 # Main program
         "DebugMode" = "Debug mode activated. FFmpeg will output extra video information.";
@@ -139,9 +139,9 @@ Rate control: LA_VBR
         "DependencySystem" = "Dùng {0} của hệ thống tại {1}";
         "DependencyLocal" = "Dùng {0} đã được tải trước";
         "DependencyNotFound" = "Không tìm thấy {0}";
-        "FFmpegDownloading" = "Đang tải {0}";
-        "FFmpegExtracting" = "Đang giải nén";
-        "FFmpegFinished" = "Đã tải xong";
+        "FileDownloading" = "Đang tải {0}";
+        "FileExtracting" = "Đang giải nén {0}";
+        "FileFinished" = "Đã tải xong {0}";
 
 # Main program
         "DebugMode" = "Đã kích hoạt chế độ debug. FFmpeg sẽ hiển thị thêm thông tin về video.";
@@ -213,9 +213,9 @@ Rate control: LA_VBR
         "DependencySystem" = "在{1}处使用系统 {0}";
         "DependencyLocal" = "使用当地的{0}";
         "DependencyNotFound" = "未找到 {0}";
-        "FFmpegDownloading" = "下载 FFmpeg {0}";
-        "FFmpegExtracting" = "提取";
-        "FFmpegFinished" = "下载完成";
+        "FileDownloading" = "下载 {0}";
+        "FileExtracting" = "提取 {0}";
+        "FileFinished" = "下载完成";
         
 # Main program
         "DebugMode" = "调试模式已激活. FFmpeg 将导出额外的视频信息.";
