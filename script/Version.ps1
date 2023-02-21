@@ -22,7 +22,7 @@ if ((Test-NetConnection))
             Invoke-WebRequest $LatestVersion.zipball_url -OutFile "$ZipPath";
             Expand-Archive -LiteralPath "$ZipPath" -DestinationPath "$TempPath";
             $Folder = Join-Path "$TempPath" "longnguyen2004-FacebookVideoOptimizer-*";
-            Get-ChildItem "$PSScriptRoot/../*" -Exclude "ffmpeg" | Remove-Item -Recurse -Force;
+            Get-ChildItem "$PSScriptRoot/../*" -Exclude "tools" | Remove-Item -Recurse -Force;
             Move-Item (Join-Path "$Folder" "*") -Destination "$PSScriptRoot/..";
             Remove-Item -Recurse -Force "$Folder";
             Remove-Item -Force "$ZipPath";
