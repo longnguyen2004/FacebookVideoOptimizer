@@ -48,6 +48,7 @@ function Download-FFmpeg {
     }
     Write-Host ($Strings["FileFinished"] -f "FFmpeg");
     Write-Host;
+    return $true;
 }
 
 $FFmpeg, $FFprobe = Check-Dependency -Name "FFmpeg" -Executables "ffmpeg","ffprobe" -DownloadFunction Download-FFmpeg

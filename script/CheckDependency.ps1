@@ -28,6 +28,6 @@ function Check-Dependency {
     }
 
     Write-Host ($Strings["DependencyNotFound"] -f $Name);
-    & $DownloadFunction $ExecLocalDir;
-    return $Executables | ForEach-Object { Join-Path $ExecLocalDir $_ };
+    $Success = & $DownloadFunction $ExecLocalDir;
+    return $Success ? ($Executables | ForEach-Object { Join-Path $ExecLocalDir $_ }) : $null;
 }

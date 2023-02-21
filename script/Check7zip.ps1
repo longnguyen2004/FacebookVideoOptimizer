@@ -56,6 +56,7 @@ function Download-7zip
     }
     Write-Host ($Strings["FileFinished"] -f "7zip");
     Write-Host;
+    return $true;
 }
 
 $7zip = Check-Dependency -Name "7zip" -Executables "7z" -DownloadFunction Download-7zip
