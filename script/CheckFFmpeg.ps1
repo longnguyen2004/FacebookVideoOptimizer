@@ -11,20 +11,20 @@ function Download-FFmpeg {
     {
         if ([Environment]::Is64BitOperatingSystem)
         {
-            $Link = "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl.zip";
-            $FolderName = "ffmpeg-master-latest-win64-gpl";
+            $Link = "https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-win64-gpl-shared.zip";
+            $FolderName = "ffmpeg-master-latest-win64-gpl-shared";
         }
         else
         {
-            $Link = "https://github.com/sudo-nautilus/FFmpeg-Builds-Win32/releases/download/latest/ffmpeg-master-latest-win32-gpl.zip";
-            $FolderName = "ffmpeg-master-latest-win32-gpl";
+            $Link = "https://github.com/sudo-nautilus/FFmpeg-Builds-Win32/releases/download/latest/ffmpeg-master-latest-win32-gpl-shared.zip";
+            $FolderName = "ffmpeg-master-latest-win32-gpl-shared";
         }
         $ArchivePath = Join-Path "$TempPath" "ffmpeg.zip";
         Write-Host ($Strings["FFmpegDownloading"] -f $Link);
         Invoke-WebRequest $Link -OutFile "$ArchivePath";
         Write-Host $Strings["FFmpegExtracting"];
         Expand-Archive "$ArchivePath" -DestinationPath "$TempPath" -Force;
-        Move-Item (Join-Path "$TempPath" "$FolderName" "bin" "ff*") "$FFmpegDir";
+        Move-Item (Join-Path "$TempPath" "$FolderName" "bin" "*") "$FFmpegDir";
         Remove-Item (Join-Path "$TempPath" "$FolderName") -Recurse -Force;
     }
     elseif ($IsMacOS)
