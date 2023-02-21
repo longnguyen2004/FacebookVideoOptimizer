@@ -215,7 +215,7 @@ Rate control: LA_VBR
         "DependencyNotFound" = "未找到 {0}";
         "FileDownloading" = "下载 {0}";
         "FileExtracting" = "提取 {0}";
-        "FileFinished" = "下载完成";
+        "FileFinished" = "下载 {0} 完成";
         
 # Main program
         "DebugMode" = "调试模式已激活. FFmpeg 将导出额外的视频信息.";
