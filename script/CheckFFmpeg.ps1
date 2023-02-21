@@ -41,8 +41,8 @@ function Download-FFmpeg {
         Invoke-WebRequest $Link -OutFile "$ArchivePath";
         Write-Host ($Strings["FileExtracting"] -f $ArchivePath);
         tar -xf $ArchivePath -C "$TempPath";
-        Move-Item (Join-Path "$TempPath" "ffmpeg-master-latest-linux64-gpl" "bin" "ff*") "$FFmpegDir";
-        Remove-Item (Join-Path "$TempPath" "ffmpeg-master-latest-linux64-gpl") -Recurse -Force;
+        Move-Item (Join-Path "$TempPath" "ffmpeg-master-latest-linux$DownloadArch-gpl" "bin" "ff*") "$FFmpegDir";
+        Remove-Item (Join-Path "$TempPath" "ffmpeg-master-latest-linux$DownloadArch-gpl") -Recurse -Force;
     }
     Write-Host ($Strings["FileFinished"] -f "FFmpeg");
     Write-Host;
