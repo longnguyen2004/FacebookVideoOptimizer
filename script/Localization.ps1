@@ -62,9 +62,9 @@ Rate control: LA_VBR
         "Default" = "Default";
 
 # FFmpeg checks
-        "FFmpegSystem" = "Using system FFmpeg at {0}";
-        "FFmpegLocal" = "Using local FFmpeg";
-        "FFmpegNotFound" = "FFmpeg not found";
+        "DependencySystem" = "Using system {0} at {1}";
+        "DependencyLocal" = "Using local {0}";
+        "DependencyNotFound" = "{0} not found";
         "FFmpegDownloading" = "Downloading {0}";
         "FFmpegExtracting" = "Extracting";
         "FFmpegFinished" = "Finished downloading";
@@ -136,9 +136,9 @@ Rate control: LA_VBR
         "Default" = "Mặc định";
 
 # FFmpeg checks
-        "FFmpegSystem" = "Dùng FFmpeg của hệ thống tại {0}";
-        "FFmpegLocal" = "Dùng FFmpeg đã được tải trước";
-        "FFmpegNotFound" = "Không tìm thấy FFmpeg";
+        "DependencySystem" = "Dùng {0} của hệ thống tại {1}";
+        "DependencyLocal" = "Dùng {0} đã được tải trước";
+        "DependencyNotFound" = "Không tìm thấy {0}";
         "FFmpegDownloading" = "Đang tải {0}";
         "FFmpegExtracting" = "Đang giải nén";
         "FFmpegFinished" = "Đã tải xong";
@@ -210,9 +210,9 @@ Rate control: LA_VBR
         "Default" = "默认";
 
 # FFmpeg checks
-        "FFmpegSystem" = "在{0}处使用系统 FFmpeg";
-        "FFmpegLocal" = "使用当地的FFmpeg";
-        "FFmpegNotFound" = "未找到 FFmpeg";
+        "DependencySystem" = "在{1}处使用系统 {0}";
+        "DependencyLocal" = "使用当地的{0}";
+        "DependencyNotFound" = "未找到 {0}";
         "FFmpegDownloading" = "下载 FFmpeg {0}";
         "FFmpegExtracting" = "提取";
         "FFmpegFinished" = "下载完成";

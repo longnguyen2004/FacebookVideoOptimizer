@@ -1,27 +1,10 @@
-$FFmpegDir = Join-Path "$PSScriptRoot" ".." "ffmpeg";
+. $PSScriptRoot/CheckDependency.ps1;
 
-$FFmpegSystem = Get-Command "ffmpeg" -ErrorAction SilentlyContinue
-$FFprobeSystem = Get-Command "ffprobe" -ErrorAction SilentlyContinue
-
-$FFmpegLocal = Get-Command "$FFmpegDir/ffmpeg" -ErrorAction SilentlyContinue
-$FFprobeLocal = Get-Command "$FFmpegDir/ffprobe" -ErrorAction SilentlyContinue
-
-if ($FFmpegSystem -and $FFprobeSystem)
-{
-    Write-Host ($Strings["FFmpegSystem"] -f $FFmpegSystem.Source);
-    $FFmpeg = $FFmpegSystem.Source;
-    $FFprobe = $FFprobeSystem.Source;
-}
-elseif ($FFmpegLocal -and $FFprobeLocal)
-{
-    Write-Host $Strings["FFmpegLocal"];
-    $FFmpeg = $FFmpegLocal.Source;
-    $FFprobe = $FFprobeLocal.Source;
-}
-else
-{
+function Download-FFmpeg {
+    param(
+        [string] $FFmpegDir
+    )
     $TempPath = [System.IO.Path]::GetTempPath();
-    Write-Host $Strings["FFmpegNotFound"];
     New-Item -ItemType Directory $FFmpegDir -ErrorAction SilentlyContinue | Out-Null;
     if ($IsWindows)
     {
@@ -60,8 +43,8 @@ else
         Move-Item (Join-Path "$TempPath" "ffmpeg-master-latest-linux64-gpl" "bin" "ff*") "$FFmpegDir";
         Remove-Item (Join-Path "$TempPath" "ffmpeg-master-latest-linux64-gpl") -Recurse -Force;
     }
-    $FFmpeg = Join-Path "$FFmpegDir" "ffmpeg";
-    $FFprobe = Join-Path "$FFmpegDir" "ffprobe";
     Write-Host $Strings["FFmpegFinished"];
     Write-Host;
 }
+
+$FFmpeg, $FFprobe = Check-Dependency -Name "FFmpeg" -Executables "ffmpeg","ffprobe" -DownloadFunction Download-FFmpeg
