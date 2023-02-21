@@ -3,6 +3,7 @@
 function Get-EncoderSettings-Software
 {
     param(
+        [Parameter(Mandatory=$true)]
         $VideoInfo
     );
     $ValidPresets = @(

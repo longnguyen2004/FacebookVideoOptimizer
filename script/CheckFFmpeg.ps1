@@ -2,6 +2,7 @@
 
 function Download-FFmpeg {
     param(
+        [Parameter(Mandatory=$true)]
         [string] $FFmpegDir
     )
     $TempPath = [System.IO.Path]::GetTempPath();

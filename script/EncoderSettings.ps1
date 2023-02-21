@@ -1,6 +1,7 @@
 function Get-EncoderSettings
 {
     param(
+        [Parameter(Mandatory=$true)]
         [string] $InputFile
     )
     . $PSScriptRoot/EncoderSettings-Software.ps1;

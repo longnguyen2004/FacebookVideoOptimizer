@@ -2,7 +2,9 @@
 
 function Encode-Video {
     param(
+        [Parameter(Mandatory=$true)]
         [string] $InputFile,
+        [Parameter(Mandatory=$true)]
         [string] $OutputFile
     )
     

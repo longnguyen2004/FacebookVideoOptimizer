@@ -1,10 +1,14 @@
 function Check-Dependency {
     param (
+        [Parameter(Mandatory=$true)]
         [string]
         $Name,
+
+        [Parameter(Mandatory=$true)]
         [string[]]
         $Executables,
 
+        [Parameter(Mandatory=$true)]
         $DownloadFunction
     )
 
