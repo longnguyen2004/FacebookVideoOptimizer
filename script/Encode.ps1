@@ -1,4 +1,4 @@
-. $PSScriptRoot/Get-Choice.ps1;
+. $PSScriptRoot/Get-UserInput.ps1;
 
 function Encode-Video {
     param(

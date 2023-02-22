@@ -2,7 +2,7 @@ $Version = 20230210
 $PatchLevel = 0
 $FullVersion = "$Version.$PatchLevel"
 
-. $PSScriptRoot/Get-Choice.ps1;
+. $PSScriptRoot/Get-UserInput.ps1;
 
 Write-Host "Facebook Video Optimizer v$FullVersion"
 Write-Host;
@@ -15,7 +15,7 @@ if ((Test-NetConnection))
     if ([System.Version]$LatestVersion.name -gt [System.Version]$FullVersion)
     {
         Write-Host ($Strings["UpdateAvailable"] -f $LatestVersion.name);
-        if ((Get-Choice -Choices "Y","N") -eq "Y")
+        if ((Get-UserInput -Choices "Y","N") -eq "Y")
         {
             $TempPath = [System.IO.Path]::GetTempPath();
             $ZipPath = Join-Path "$TempPath" "update.zip";

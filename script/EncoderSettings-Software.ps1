@@ -1,4 +1,4 @@
-. $PSScriptRoot/Get-Choice.ps1;
+. $PSScriptRoot/Get-UserInput.ps1;
 
 function Get-EncoderSettings-Software
 {
@@ -37,7 +37,7 @@ function Get-EncoderSettings-Software
     }
 
     Write-Host $Strings["x264Presets"];
-    $Preset = Get-Choice -Choices $ValidPresets -Default $DefaultPreset;
+    $Preset = Get-UserInput -Choices $ValidPresets -Default $DefaultPreset;
 
     Write-Host;
     Write-Host ($Strings["x264Info"] -f $Preset)

@@ -1,4 +1,4 @@
-. $PSScriptRoot/Get-Choice.ps1;
+. $PSScriptRoot/Get-UserInput.ps1;
 
 function Get-EncoderSettings-Hardware {
     function Find-GPU-Windows
@@ -37,7 +37,7 @@ function Get-EncoderSettings-Hardware {
     {
         Write-Host $Strings["GPUSelect"];
         $GPUSupported | % { $i = 1 } { Write-Host "${i}: $_"; $i++ }
-        $GPU = $GPUSupported[[int](Get-Choice -Choices $(1..($GPUSupported.Length))) - 1];   
+        $GPU = $GPUSupported[[int](Get-UserInput -Choices $(1..($GPUSupported.Length))) - 1];   
     }
     Write-Host;
     switch ($GPU) {

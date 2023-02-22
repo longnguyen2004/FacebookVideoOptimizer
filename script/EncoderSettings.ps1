@@ -13,7 +13,7 @@ function Get-EncoderSettings
     $FileInfo = $FileInfo | ConvertFrom-Json;
 
     Write-Host $Strings["EncoderType"];
-    $EncoderType = [int](Get-Choice -Choices 1, 2 -Default 1);
+    $EncoderType = [int](Get-UserInput -Choices 1, 2 -Default 1);
     Write-Host;
 
     switch ($EncoderType)
