@@ -47,6 +47,7 @@ Rate control: LA_VBR
 "@;
 
 # Processing text
+        "OpeningPreview" = "Opening video preview...";
         "ProcessingAudio" = "Processing audio...";
         "ProcessingVideo" = "Processing video...";
         "Muxing" = "Muxing...";
@@ -121,6 +122,7 @@ Rate control: LA_VBR
 "@;
 
 # Processing text
+        "OpeningPreview" = "Đang bật cửa sổ xem trước...";
         "ProcessingAudio" = "Đang xử lý audio...";
         "ProcessingVideo" = "Đang xử lý video...";
         "Muxing" = "Muxing...";
@@ -195,6 +197,7 @@ Rate control: LA_VBR
 "@;
 
 # Processing text
+        "OpeningPreview" = "开口视频预览...";
         "ProcessingAudio" = "正在处理音频...";
         "ProcessingVideo" = "正在处理视频...";
         "Muxing" = "多路复用...";
