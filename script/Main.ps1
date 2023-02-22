@@ -14,6 +14,7 @@ $Strings = $Translation[$Language];
 . $PSScriptRoot/Version.ps1
 . $PSScriptRoot/Check7zip.ps1
 . $PSScriptRoot/CheckFFmpeg.ps1
+. $PSScriptRoot/CheckMpv.ps1
 . $PSScriptRoot/Encode.ps1
 
 if ($Debug)
@@ -49,6 +50,8 @@ while ($true)
         continue;
     }
     Write-Host;
+
+    Preview-Video "$InputFile";
 
     $VideoBitrate = 1800;
     $AudioBitrate = 128;
