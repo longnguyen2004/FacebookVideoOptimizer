@@ -61,7 +61,7 @@ Rate control: LA_VBR
         "Choice" = "Choice";
         "Default" = "Default";
 
-# FFmpeg checks
+# Dependency checks
         "DependencySystem" = "Using system {0} at {1}";
         "DependencyLocal" = "Using local {0}";
         "DependencyNotFound" = "{0} not found";
@@ -135,7 +135,7 @@ Rate control: LA_VBR
         "Choice" = "Lựa chọn";
         "Default" = "Mặc định";
 
-# FFmpeg checks
+# Dependency checks
         "DependencySystem" = "Dùng {0} của hệ thống tại {1}";
         "DependencyLocal" = "Dùng {0} đã được tải trước";
         "DependencyNotFound" = "Không tìm thấy {0}";
@@ -209,7 +209,7 @@ Rate control: LA_VBR
         "Choice" = "选择";
         "Default" = "默认";
 
-# FFmpeg checks
+# Dependency checks
         "DependencySystem" = "在{1}处使用系统 {0}";
         "DependencyLocal" = "使用当地的{0}";
         "DependencyNotFound" = "未找到 {0}";
