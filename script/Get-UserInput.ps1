@@ -12,7 +12,11 @@ function Get-UserInput {
 
         [Parameter(Mandatory = $true, ParameterSetName = "Pattern")]
         [CmdletBinding(PositionalBinding=$false)]
-        [string]   $Pattern
+        [string]   $Pattern,
+
+        [Parameter(Mandatory = $true, ParameterSetName = "Predicate")]
+        [CmdletBinding(PositionalBinding=$false)]
+        [object]   $Predicate
     )
     if ($Choices)
     {
@@ -47,6 +51,15 @@ function Get-UserInput {
             $Answer = Read-Host -Prompt $Prompt;
         }
         while ($Answer -notmatch $Pattern);
+        return $Answer;
+    }
+    if ($Predicate)
+    {
+        do
+        {
+            $Answer = Read-Host -Prompt $Prompt;
+        }
+        while (-not (& $Predicate $Answer));
         return $Answer;
     }
 }
