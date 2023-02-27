@@ -13,7 +13,7 @@ function Preview-Video {
         "--hwdec=auto-safe",
         "--vo=gpu",
         "--scropt-opts=osc-visibility=always",
-        $Path
+        "`"$Path`""
     );
 
     return Start-Process "$mpv" -ArgumentList $MpvParams -PassThru;
