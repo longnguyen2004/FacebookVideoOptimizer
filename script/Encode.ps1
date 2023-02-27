@@ -1,5 +1,12 @@
 . $PSScriptRoot/Get-UserInput.ps1;
 
+$FFmpegOptions = (
+    "-hide_banner",
+    "-loglevel", $LogLevel,
+    "-stats",
+    "-y"
+)
+
 function Encode-Video {
     param(
         [Parameter(Mandatory=$true)]
@@ -26,12 +33,11 @@ function Encode-Video {
     {
         $Pass1Param, $Pass2Param = $EncoderSettings."2PassParam";
         Write-Host ($Strings["CurrentPass"] -f 1,2);
-        & "$FFmpeg" `
-            -hide_banner -loglevel $LogLevel -stats `
-            -y -i "$InputFile" -fps_mode cfr        `
-            -vf ($VideoFilters -join ",")           `
-            -c:v $Encoder -b:v "${VideoBitrate}k"   `
-            @CommonParam @Pass1Param                `
+        & "$FFmpeg" @FFmpegOptions `
+            -i "$InputFile" -fps_mode cfr         `
+            -vf ($VideoFilters -join ",")         `
+            -c:v $Encoder -b:v "${VideoBitrate}k" `
+            @CommonParam @Pass1Param              `
             -an -f null ($IsWindows ? "NUL" : "/dev/null")
         Write-Host;
         if ($LASTEXITCODE -ne 0) 
@@ -40,12 +46,11 @@ function Encode-Video {
         }
 
         Write-Host ($Strings["CurrentPass"] -f 2,2);
-        & "$FFmpeg" `
-            -hide_banner -loglevel $LogLevel -stats `
-            -y -i "$InputFile" -fps_mode cfr        `
-            -vf ($VideoFilters -join ",")           `
-            -c:v $Encoder -b:v "${VideoBitrate}k"   `
-            @CommonParam @Pass2Param                `
+        & "$FFmpeg" @FFmpegOptions `
+            -i "$InputFile" -fps_mode cfr         `
+            -vf ($VideoFilters -join ",")         `
+            -c:v $Encoder -b:v "${VideoBitrate}k" `
+            @CommonParam @Pass2Param              `
             -an "$OutputFile"
         Write-Host;
         Remove-Item "*2pass*";
@@ -56,12 +61,11 @@ function Encode-Video {
     }
     else
     {
-        & "$FFmpeg" `
-            -hide_banner -loglevel $LogLevel -stats `
-            -y -i "$InputFile" -fps_mode cfr        `
-            -vf ($VideoFilters -join ",")           `
-            -c:v $Encoder -b:v "${VideoBitrate}k"   `
-            @CommonParam                            `
+        & "$FFmpeg" @FFmpegOptions `
+            -i "$InputFile" -fps_mode cfr         `
+            -vf ($VideoFilters -join ",")         `
+            -c:v $Encoder -b:v "${VideoBitrate}k" `
+            @CommonParam                          `
             -an "$OutputFile"
         Write-Host;
         if ($LASTEXITCODE -ne 0) 
@@ -79,10 +83,10 @@ function Encode-Audio {
     )
     Write-Host $Strings["ProcessingAudio"];
     Write-Host ($Strings["Bitrate"] -f $AudioBitrate);
-    & "$FFmpeg" -y -i "$InputFile" `
-        -hide_banner -loglevel $LogLevel -stats `
-        -c:a aac -b:a "${AudioBitrate}k"        `
-        -af "lowpass=f=16000:r=f64,dynaudnorm"  `
+    & "$FFmpeg" @FFmpegOptions `
+        -i "$InputFile"                        `
+        -c:a aac -b:a "${AudioBitrate}k"       `
+        -af "lowpass=f=16000:r=f64,dynaudnorm" `
         -vn "$OutputFile"
     Write-Host;
     return ($LASTEXITCODE -eq 0);
@@ -103,10 +107,7 @@ function Encode {
     if (-not $AudioResult) { return $false };
 
     Write-Host $Strings["Muxing"];
-    & "$FFmpeg" `
-        -y -hide_banner -loglevel $LogLevel -stats `
-        -i "$VideoFile" -i "$AudioFile"            `
-        -c copy "$OutputFile"
+    & "$FFmpeg" @FFmpegOptions -i "$VideoFile" -i "$AudioFile" -c copy "$OutputFile"
     Write-Host;
 
     Remove-Item $VideoFile -Force;
