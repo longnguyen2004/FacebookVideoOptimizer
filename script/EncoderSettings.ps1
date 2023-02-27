@@ -7,8 +7,8 @@ function Get-EncoderSettings
     . $PSScriptRoot/EncoderSettings-Software.ps1;
     . $PSScriptRoot/EncoderSettings-Hardware.ps1;
 
-    $FileInfo = & "$FFprobe" -v quiet -print_format json -show_format -show_streams "$InputFile";
-    Write-Debug "ffprobe output:";
+    $FileInfo = & "$FFprobe" -v quiet -print_format json -show_streams "$InputFile";
+    Write-Debug "Stream info:";
     Write-Debug ("`n" + (($FileInfo | % { $_ + "`n" }) -join ""));
     $FileInfo = $FileInfo | ConvertFrom-Json;
 
