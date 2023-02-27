@@ -51,7 +51,10 @@ while ($true)
     }
     Write-Host;
 
-    $TimeStart, $TimeEnd = Trim-Video "$InputFile";
+    if ((Split-Path -Extension "$InputFile") -ne ".avs")
+    {
+        $TimeStart, $TimeEnd = Trim-Video "$InputFile";
+    }
 
     $VideoBitrate = 1800;
     $AudioBitrate = 128;
