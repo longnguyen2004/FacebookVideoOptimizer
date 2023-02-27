@@ -13,8 +13,6 @@ $Strings = $Translation[$Language];
 
 . $PSScriptRoot/Version.ps1
 . $PSScriptRoot/Tools.ps1
-. $PSScriptRoot/Encode.ps1
-. $PSScriptRoot/Trim.ps1
 
 if ($Debug)
 {
@@ -22,6 +20,9 @@ if ($Debug)
 }
 
 $LogLevel = $Debug ? "verbose" : "error";
+
+. $PSScriptRoot/Encode.ps1
+. $PSScriptRoot/Trim.ps1
 
 while ($true)
 {
