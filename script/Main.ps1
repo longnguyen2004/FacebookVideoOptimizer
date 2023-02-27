@@ -14,6 +14,7 @@ $Strings = $Translation[$Language];
 . $PSScriptRoot/Version.ps1
 . $PSScriptRoot/Tools.ps1
 . $PSScriptRoot/Encode.ps1
+. $PSScriptRoot/Trim.ps1
 
 if ($Debug)
 {
@@ -49,14 +50,14 @@ while ($true)
     }
     Write-Host;
 
-    Preview-Video "$InputFile";
+    $TimeStart, $TimeEnd = Trim-Video "$InputFile";
 
     $VideoBitrate = 1800;
     $AudioBitrate = 128;
 
     $OutputFile = Join-Path (Split-Path -Parent $InputFile) ((Split-Path -LeafBase $InputFile) + " (transcode).mp4");
 
-    $Success = Encode "$InputFile" "$OutputFile";
+    $Success = Encode "$InputFile" "$OutputFile" -TimeStart $TimeStart -TimeEnd $TimeEnd;
     Write-Host ($Success ? ($Strings["Finished"] -f $OutputFile) : $Strings["Failed"]);
     Write-Host;
     Write-Host $Strings["EnterToContinue"];
