@@ -3,7 +3,7 @@ function Preview-Video {
         [Parameter(Mandatory = $true)]
         [string] $Path
     )
-    if (-not $mpv) { return; }
+    if (-not $mpv) { return $null; }
     Write-Host $Strings["OpeningPreview"];
     Start-Sleep -Seconds 1;
 
