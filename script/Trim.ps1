@@ -5,18 +5,13 @@ function Trim-Video {
         [Parameter(Mandatory = $true)]
         [string] $InputFile
     )
-
-    Write-Host $Strings["TrimPrompt"];
-    $Choice = Get-UserInput -Choices "Y","N";
-    Write-Host;
-    if ("N" -eq $Choice) { return $null; }
-
     $Process = Preview-Video $InputFile;
 
     $Duration = (& "$FFprobe" -v quiet -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 $InputFile)
 
     $TimeStart = Get-UserInput -Prompt $Strings["TrimStart"] -Predicate {
         param([string] $time)
+        if ("" -eq $time) { return $true; }
         try {
             $seconds = ([timespan]$time).TotalSeconds;
             return $seconds -ge 0 -and $seconds -le $Duration;

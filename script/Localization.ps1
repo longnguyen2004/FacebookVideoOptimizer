@@ -49,8 +49,8 @@ Rate control: LA_VBR
 # Processing text
         "OpeningPreview" = "Opening video preview...";
         "TrimPrompt" = "Do you want to trim the video?";
-        "TrimStart" = "Start position (HH:MM:SS)";
-        "TrimEnd" = "End position (HH:MM:SS) (leave blank to cut until end)";
+        "TrimStart" = "Start position (HH:MM:SS.mmm) (leave blank to cut from start)";
+        "TrimEnd" = "End position (HH:MM:SS.mmm) (leave blank to cut until end)";
         "ProcessingAudio" = "Processing audio...";
         "ProcessingVideo" = "Processing video...";
         "Muxing" = "Muxing...";
@@ -127,8 +127,8 @@ Rate control: LA_VBR
 # Processing text
         "OpeningPreview" = "Đang bật cửa sổ xem trước...";
         "TrimPrompt" = "Bạn có muốn cắt video?";
-        "TrimStart" = "Vị trí bắt đầu (HH:MM:SS)";
-        "TrimEnd" = "Vị trí kết thúc (HH:MM:SS) (bỏ trống để cắt đến cuối video)";
+        "TrimStart" = "Vị trí bắt đầu (HH:MM:SS.mmm) (bỏ trống để cắt từ đầu video)";
+        "TrimEnd" = "Vị trí kết thúc (HH:MM:SS.mmm) (bỏ trống để cắt đến cuối video)";
         "ProcessingAudio" = "Đang xử lý audio...";
         "ProcessingVideo" = "Đang xử lý video...";
         "Muxing" = "Muxing...";
@@ -205,8 +205,9 @@ Rate control: LA_VBR
 # Processing text
         "OpeningPreview" = "开口视频预览...";
         "TrimPrompt" = "您想修剪视频吗?";
-        "TrimStart" = "开始位置 (HH:MM:SS)";
-        "TrimEnd" = "结束位置 (HH:MM:SS)";
+        # Waiting for proper translations...
+        "TrimStart" = "开始位置 (HH:MM:SS.mmm)";
+        "TrimEnd" = "结束位置 (HH:MM:SS.mmm)";
         "ProcessingAudio" = "正在处理音频...";
         "ProcessingVideo" = "正在处理视频...";
         "Muxing" = "多路复用...";
