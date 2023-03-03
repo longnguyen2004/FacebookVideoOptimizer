@@ -9,7 +9,7 @@ function Preview-Video {
 
     $MpvParams = (
         "--keep-open",
-        "--geometry=800x600",
+        "--geometry=1024x768",
         "--hwdec=auto-safe",
         "--vo=gpu",
         "--script-opts=osc-visibility=always,osc-timems=yes",
