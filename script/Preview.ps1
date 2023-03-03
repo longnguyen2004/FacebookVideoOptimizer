@@ -12,7 +12,7 @@ function Preview-Video {
         "--geometry=800x600",
         "--hwdec=auto-safe",
         "--vo=gpu",
-        "--script-opts=osc-visibility=always",
+        "--script-opts=osc-visibility=always,osc-timems=yes",
         "`"$Path`""
     );
 
