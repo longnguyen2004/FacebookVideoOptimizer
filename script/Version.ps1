@@ -2,8 +2,6 @@ $Version = 20230329
 $PatchLevel = 0
 $FullVersion = "$Version.$PatchLevel"
 
-. $PSScriptRoot/Get-UserInput.ps1;
-
 Write-Host "Facebook Video Optimizer v$FullVersion"
 Write-Host;
 

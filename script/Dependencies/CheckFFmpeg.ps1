@@ -1,5 +1,3 @@
-. $PSScriptRoot/CheckDependency.ps1;
-
 function Download-FFmpeg {
     param(
         [Parameter(Mandatory=$true)]
@@ -51,4 +49,7 @@ function Download-FFmpeg {
     return $true;
 }
 
-$FFmpeg, $FFprobe = Check-Dependency -Name "FFmpeg" -Executables "ffmpeg","ffprobe" -DownloadFunction Download-FFmpeg
+$FFmpeg, $FFprobe = Check-Dependency `
+    -Name "FFmpeg"                  `
+    -Executables "ffmpeg","ffprobe" `
+    -DownloadFunction Download-FFmpeg

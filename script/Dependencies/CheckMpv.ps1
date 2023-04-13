@@ -1,5 +1,3 @@
-. $PSScriptRoot/CheckDependency.ps1;
-
 function Download-Mpv {
     param(
         [Parameter(Mandatory=$true)]

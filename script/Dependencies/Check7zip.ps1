@@ -1,6 +1,3 @@
-. $PSScriptRoot/CheckDependency.ps1;
-. $PSScriptRoot/ExpandArchive-Enhanced.ps1;
-
 function Download-7zip
 {
     param(

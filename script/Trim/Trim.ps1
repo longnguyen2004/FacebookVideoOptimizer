@@ -1,4 +1,3 @@
-. $PSScriptRoot/Get-UserInput.ps1;
 . $PSScriptRoot/Preview.ps1;
 function Trim-Video {
     param (

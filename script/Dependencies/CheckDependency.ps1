@@ -19,7 +19,7 @@ function Check-Dependency {
         return $ExecSystem;
     }
 
-    $ExecLocalDir = Join-Path "$PSScriptRoot" ".." "tools" $Name.ToLower();
+    $ExecLocalDir = Join-Path "$RootDir" "tools" $Name.ToLower();
     $ExecLocal = @($Executables | ForEach-Object { Get-Command (Join-Path $ExecLocalDir $_) -ErrorAction SilentlyContinue });
     if ($ExecLocal.Count -eq $Executables.Count) {
         $ExecLocal = $ExecLocal | ForEach-Object { $_.Source };

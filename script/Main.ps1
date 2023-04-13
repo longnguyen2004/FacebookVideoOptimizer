@@ -4,15 +4,17 @@ param(
 )
 
 . $PSScriptRoot/Localization.ps1
-
 if (-not $Translation.ContainsKey($Language))
 {
     throw "Unrecognized language: $Language";
 }
 $Strings = $Translation[$Language];
 
+$RootDir = Resolve-Path (Join-Path "$PSScriptRoot" "..");
+
+. $PSScriptRoot/Utilities/Get-UserInput.ps1;
 . $PSScriptRoot/Version.ps1
-. $PSScriptRoot/Tools.ps1
+. $PSScriptRoot/Dependencies/Dependencies.ps1
 
 if ($Debug)
 {
@@ -21,8 +23,8 @@ if ($Debug)
 
 $LogLevel = $Debug ? "verbose" : "error";
 
-. $PSScriptRoot/Encode.ps1
-. $PSScriptRoot/Trim.ps1
+. $PSScriptRoot/Encode/Encode.ps1
+. $PSScriptRoot/Trim/Trim.ps1
 
 while ($true)
 {

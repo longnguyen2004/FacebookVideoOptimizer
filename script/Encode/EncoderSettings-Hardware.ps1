@@ -1,5 +1,3 @@
-. $PSScriptRoot/Get-UserInput.ps1;
-
 function Get-EncoderSettings-Hardware {
     function Find-GPU-Windows
     {

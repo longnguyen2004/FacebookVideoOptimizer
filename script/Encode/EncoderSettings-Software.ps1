@@ -1,5 +1,3 @@
-. $PSScriptRoot/Get-UserInput.ps1;
-
 function Get-EncoderSettings-Software
 {
     param(

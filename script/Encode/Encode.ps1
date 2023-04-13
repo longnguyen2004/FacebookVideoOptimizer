@@ -1,5 +1,3 @@
-. $PSScriptRoot/Get-UserInput.ps1;
-
 $FFmpegOptions = (
     "-hide_banner",
     "-loglevel", $LogLevel,
