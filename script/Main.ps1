@@ -13,8 +13,11 @@ $Strings = $Translation[$Language];
 $RootDir = Resolve-Path (Join-Path "$PSScriptRoot" "..");
 
 . $PSScriptRoot/Utilities/Get-UserInput.ps1;
+. $PSScriptRoot/Utilities/Parse-PathString.ps1
 . $PSScriptRoot/Version.ps1
 . $PSScriptRoot/Dependencies/Dependencies.ps1
+
+Clear-Host;
 
 if ($Debug)
 {
@@ -24,48 +27,51 @@ if ($Debug)
 $LogLevel = $Debug ? "verbose" : "error";
 
 . $PSScriptRoot/Encode/Encode.ps1
+. $PSScriptRoot/Encode/EncoderSettings.ps1
 . $PSScriptRoot/Trim/Trim.ps1
 
 while ($true)
 {
-    $InputFile = Read-Host $Strings["VideoPathPrompt"];
-    if (-not $InputFile)
+    $InputString = Read-Host $Strings["VideoPathPrompt"];
+    if (-not $InputString)
     {
-        Write-Host;
         return;
     }
-
-    # PowerShell drag-and-drop paths
-    if ($InputFile -match "^& '(.+)'$")
-    {
-        $InputFile = $Matches[1] -replace "''","'"
-    }
-    # Windows Terminal drag-and-drop paths
-    elseif ($InputFile -match '^"(.+)"$')
-    {
-    	$InputFile = $Matches[1]
-    }
-
-    if (-not (Test-Path $InputFile -PathType Leaf))
-    {
-        Write-Error $Strings["InvalidPath"];
-        continue;
-    }
+    $InputFiles = Parse-PathString $InputString;
     Write-Host;
+    
+    Write-Host $Strings["VideoList"];
+    $InputFiles | ForEach-Object { Write-Host "- $_" }
+    Write-Host $Strings["EnterToContinue"];
+    Read-Host;
 
-    if ((Split-Path -Extension "$InputFile") -ne ".avs")
+    $EncodeJobs = $null;
+    foreach ($InputFile in $InputFiles)
     {
-        $TimeStart, $TimeEnd = Trim-Video "$InputFile";
+        Clear-Host;
+        Write-Host ($Strings["SettingsForFile"] -f $InputFile);
+        $OutputFile = Join-Path (Split-Path -Parent $InputFile) ((Split-Path -LeafBase $InputFile) + " (transcode).mp4");
+        if ((Split-Path -Extension "$InputFile") -ne ".avs")
+        {
+            $TrimTime = Trim-Video "$InputFile";
+        }
+        $EncodeJob = [PSCustomObject]@{
+            "Input" = $InputFile;
+            "Output" = $OutputFile;
+            "Encoder" = Get-EncoderSettings $InputFile;
+            "Trim" = $TrimTime;
+        }
+        $EncodeJobs += ,$EncodeJob;
     }
 
-    $VideoBitrate = 1800;
-    $AudioBitrate = 128;
-
-    $OutputFile = Join-Path (Split-Path -Parent $InputFile) ((Split-Path -LeafBase $InputFile) + " (transcode).mp4");
-
-    $Success = Encode "$InputFile" "$OutputFile" -TimeStart $TimeStart -TimeEnd $TimeEnd;
-    Write-Host ($Success ? ($Strings["Finished"] -f $OutputFile) : $Strings["Failed"]);
-    Write-Host;
+    Clear-Host;
+    foreach ($Job in $EncodeJobs)
+    {
+        Write-Host ($Strings["ProcessingFile"] -f $Job.Input);
+        $Success = Encode $Job;
+        Write-Host ($Success ? ($Strings["Finished"] -f $OutputFile) : $Strings["Failed"]);
+        Write-Host;
+    }
     Write-Host $Strings["EnterToContinue"];
     Read-Host;
     Clear-Host;

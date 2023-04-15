@@ -47,10 +47,12 @@ Rate control: LA_VBR
 "@;
 
 # Processing text
+        "SettingsForFile" = "Settings for file {0}";
         "OpeningPreview" = "Opening video preview...";
         "TrimPrompt" = "Do you want to trim the video?";
         "TrimStart" = "Start position (HH:MM:SS.mmm) (leave blank to cut from start)";
         "TrimEnd" = "End position (HH:MM:SS.mmm) (leave blank to cut until end)";
+        "ProcessingFile" = "Processing file {0}...";
         "ProcessingAudio" = "Processing audio...";
         "ProcessingVideo" = "Processing video...";
         "Muxing" = "Muxing...";
@@ -75,8 +77,9 @@ Rate control: LA_VBR
 
 # Main program
         "DebugMode" = "Debug mode activated. FFmpeg will output extra video information.";
-        "VideoPathPrompt" = "Path to video (drag and drop allowed)";
-        "InvalidPath" = "Invalid path!";
+        "VideoPathPrompt" = "Path to videos (drag and drop allowed)";
+        "VideoList" = "List of videos to process:";
+        "InvalidPath" = "Invalid path: {0}";
         "Finished" = @"
 Processing finished!
 Output file: {0}
@@ -125,10 +128,12 @@ Rate control: LA_VBR
 "@;
 
 # Processing text
+        "SettingsForFile" = "Cài đặt cho file {0}";
         "OpeningPreview" = "Đang bật cửa sổ xem trước...";
         "TrimPrompt" = "Bạn có muốn cắt video?";
         "TrimStart" = "Vị trí bắt đầu (HH:MM:SS.mmm) (bỏ trống để cắt từ đầu video)";
         "TrimEnd" = "Vị trí kết thúc (HH:MM:SS.mmm) (bỏ trống để cắt đến cuối video)";
+        "ProcessingFile" = "Đang xử lý file {0}...";
         "ProcessingAudio" = "Đang xử lý audio...";
         "ProcessingVideo" = "Đang xử lý video...";
         "Muxing" = "Muxing...";
@@ -153,8 +158,9 @@ Rate control: LA_VBR
 
 # Main program
         "DebugMode" = "Đã kích hoạt chế độ debug. FFmpeg sẽ hiển thị thêm thông tin về video.";
-        "VideoPathPrompt" = "Đường dẫn đến file video cần xử lý (có thể kéo thả)";
-        "InvalidPath" = "Đường dẫn không hợp lệ!";
+        "VideoPathPrompt" = "Đường dẫn đến các file video (có thể kéo thả)";
+        "VideoList" = "Danh sách các video sẽ xử lý:"
+        "InvalidPath" = "Đường dẫn không hợp lệ: {0}";
         "Finished" = @"
 Xử lý hoàn tất!
 File output: {0}
@@ -203,11 +209,13 @@ Rate control: LA_VBR
 "@;
 
 # Processing text
+        "SettingsForFile" = "文件的设置 {0}";
         "OpeningPreview" = "开口视频预览...";
         "TrimPrompt" = "您想修剪视频吗?";
         # Waiting for proper translations...
         "TrimStart" = "开始位置 (HH:MM:SS.mmm)";
         "TrimEnd" = "结束位置 (HH:MM:SS.mmm)";
+        "ProcessingFile" = "处理文件 {0}...";
         "ProcessingAudio" = "正在处理音频...";
         "ProcessingVideo" = "正在处理视频...";
         "Muxing" = "多路复用...";
@@ -232,8 +240,9 @@ Rate control: LA_VBR
         
 # Main program
         "DebugMode" = "调试模式已激活. FFmpeg 将导出额外的视频信息.";
-        "VideoPathPrompt" = "视频路径（允许拖放）";
-        "InvalidPath" = "无效路径!";
+        "VideoPathPrompt" = "视频的路径（允许拖放）";
+        "VideoList" = "要处理的视频列表:"
+        "InvalidPath" = "无效路径: {0}";
         "Finished" = @"
 处理完毕！
 输出文件: {0}

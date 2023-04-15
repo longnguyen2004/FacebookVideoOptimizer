@@ -34,7 +34,7 @@ function Get-EncoderSettings-Hardware {
     else
     {
         Write-Host $Strings["GPUSelect"];
-        $GPUSupported | % { $i = 1 } { Write-Host "${i}: $_"; $i++ }
+        $GPUSupported | ForEach-Object { $i = 1 } { Write-Host "${i}: $_"; $i++ }
         $GPU = $GPUSupported[[int](Get-UserInput -Choices $(1..($GPUSupported.Length))) - 1];   
     }
     Write-Host;
@@ -52,8 +52,8 @@ function Get-EncoderSettings-Hardware {
                     "-coder"       , "cabac",
                     "-b_ref_mode"  , "1",
                     "-preset"      , "p7",
-                    "-maxrate:v"   , "${VideoBitrate}k",
-                    "-bufsize:v"   , "5M"
+                    "-maxrate:v"   , "5M",
+                    "-bufsize:v"   , "10M"
                 );
                 "MaxRes" = "720";
                 "MaxFps" = "60";

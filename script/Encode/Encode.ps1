@@ -8,28 +8,25 @@ $FFmpegOptions = (
 function Encode-Video {
     param(
         [Parameter(Mandatory=$true)]
-        [string] $InputFile,
+        [string]$InputFile,
         [Parameter(Mandatory=$true)]
-        [string] $OutputFile,
-
-        [CmdletBinding(PositionalBinding = $false)]
-        [string] $TimeStart,
-        [CmdletBinding(PositionalBinding = $false)]
-        [string] $TimeEnd
+        [string]$OutputFile,
+        [Parameter(Mandatory=$true)]
+        [PSCustomObject]$EncoderSettings,
+        [string[]]$Trim
     )
-    
-    . $PSScriptRoot/EncoderSettings.ps1
-    $EncoderSettings = Get-EncoderSettings "$InputFile";
 
     $Encoder = $EncoderSettings.Encoder;
     $CommonParam = $EncoderSettings.CommonParam;
-    $VideoFilters = $EncoderSettings.VideoFilters;
+    $Filters = $EncoderSettings.Filters;
+    $Bitrate = $EncoderSettings.Bitrate;
+    $TimeStart, $TimeEnd = $Trim;
     Write-Host;
 
     Write-Host $Strings["ProcessingVideo"];
-    Write-Host ($Strings["Bitrate"] -f $VideoBitrate);
+    Write-Host ($Strings["Bitrate"] -f $Bitrate);
     Write-Host ($Strings["EncoderSettings"] -f ($CommonParam -join " "));
-    Write-Host ($Strings["VideoFilters"] -f ($VideoFilters -join ", "));
+    Write-Host ($Strings["VideoFilters"] -f ($Filters -join ", "));
     Write-Host;
 
     $InputParams = ("-i", $InputFile);
@@ -48,10 +45,10 @@ function Encode-Video {
         $Pass1Param, $Pass2Param = $EncoderSettings."2PassParam";
         Write-Host ($Strings["CurrentPass"] -f 1,2);
         & "$FFmpeg" @FFmpegOptions `
-            @InputParams                          `
-            -vf ($VideoFilters -join ",")         `
-            -c:v $Encoder -b:v "${VideoBitrate}k" `
-            @CommonParam @Pass1Param              `
+            @InputParams                     `
+            -vf ($Filters -join ",")         `
+            -c:v $Encoder -b:v "${Bitrate}k" `
+            @CommonParam @Pass1Param         `
             -an -f null ($IsWindows ? "NUL" : "/dev/null")
         Write-Host;
         if ($LASTEXITCODE -ne 0) 
@@ -61,10 +58,10 @@ function Encode-Video {
 
         Write-Host ($Strings["CurrentPass"] -f 2,2);
         & "$FFmpeg" @FFmpegOptions `
-            @InputParams                          `
-            -vf ($VideoFilters -join ",")         `
-            -c:v $Encoder -b:v "${VideoBitrate}k" `
-            @CommonParam @Pass2Param              `
+            @InputParams                     `
+            -vf ($Filters -join ",")         `
+            -c:v $Encoder -b:v "${Bitrate}k" `
+            @CommonParam @Pass2Param         `
             -an "$OutputFile"
         Write-Host;
         Remove-Item "*2pass*";
@@ -76,10 +73,10 @@ function Encode-Video {
     else
     {
         & "$FFmpeg" @FFmpegOptions `
-            @InputParams                          `
-            -vf ($VideoFilters -join ",")         `
-            -c:v $Encoder -b:v "${VideoBitrate}k" `
-            @CommonParam                          `
+            @InputParams                     `
+            -vf ($Filters -join ",")         `
+            -c:v $Encoder -b:v "${Bitrate}k" `
+            @CommonParam                     `
             -an "$OutputFile"
         Write-Host;
         if ($LASTEXITCODE -ne 0) 
@@ -93,17 +90,18 @@ function Encode-Video {
 function Encode-Audio {
     param(
         [Parameter(Mandatory=$true)]
-        [string] $InputFile,
+        [string]$InputFile,
         [Parameter(Mandatory=$true)]
-        [string] $OutputFile,
-
-        [CmdletBinding(PositionalBinding = $false)]
-        [string] $TimeStart,
-        [CmdletBinding(PositionalBinding = $false)]
-        [string] $TimeEnd
+        [string]$OutputFile,
+        [Parameter(Mandatory=$true)]
+        [PSCustomObject]$EncoderSettings,
+        [string[]]$Trim
     )
+    $Encoder = $EncoderSettings.Encoder;
+    $Bitrate = $EncoderSettings.Bitrate;
+    $TimeStart, $TimeEnd = $Trim;
     Write-Host $Strings["ProcessingAudio"];
-    Write-Host ($Strings["Bitrate"] -f $AudioBitrate);
+    Write-Host ($Strings["Bitrate"] -f $Bitrate);
 
     $InputParams = ("-i", $InputFile);
     if ($TimeStart)
@@ -116,9 +114,9 @@ function Encode-Audio {
     }
 
     & "$FFmpeg" @FFmpegOptions `
-        @InputParams                           `
-        -c:a aac -b:a "${AudioBitrate}k"       `
-        -af "lowpass=f=16000:r=f64"            `
+        @InputParams                     `
+        -c:a $Encoder -b:a "${Bitrate}k" `
+        -af "lowpass=f=16000:r=f64"      `
         -vn "$OutputFile"
     Write-Host;
     return ($LASTEXITCODE -eq 0);
@@ -126,23 +124,21 @@ function Encode-Audio {
 function Encode {
     param(
         [Parameter(Mandatory=$true)]
-        [string] $InputFile,
-        [Parameter(Mandatory=$true)]
-        [string] $OutputFile,
-
-        [CmdletBinding(PositionalBinding = $false)]
-        [string] $TimeStart,
-        [CmdletBinding(PositionalBinding = $false)]
-        [string] $TimeEnd
+        [PSCustomObject]$Job
     )
+    $InputFile = $Job.Input;
+    $OutputFile = $Job.Output;
+
     $TempDir = $IsWindows ? $Env:Temp : "/tmp";
     $VideoFile = Join-Path "$TempDir" "video.mp4";
     $AudioFile = Join-Path "$TempDir" "audio.m4a";
 
-    $VideoResult = Encode-Video $InputFile $VideoFile -TimeStart $TimeStart -TimeEnd $TimeEnd;
+    $VideoResult = Encode-Video $InputFile $VideoFile `
+        -EncoderSettings $Job.Encoder.Video -Trim $Job.Trim
     if (-not $VideoResult) { return $false };
 
-    $AudioResult = Encode-Audio $InputFile $AudioFile -TimeStart $TimeStart -TimeEnd $TimeEnd;
+    $AudioResult = Encode-Audio $InputFile $AudioFile `
+        -EncoderSettings $Job.Encoder.Audio -Trim $Job.Trim
     if (-not $AudioResult) { return $false };
 
     Write-Host $Strings["Muxing"];
