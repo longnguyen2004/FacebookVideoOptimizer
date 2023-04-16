@@ -142,7 +142,10 @@ function Encode {
     if (-not $AudioResult) { return $false };
 
     Write-Host $Strings["Muxing"];
-    & "$FFmpeg" @FFmpegOptions -i "$VideoFile" -i "$AudioFile" -c copy "$OutputFile"
+    & "$FFmpeg" @FFmpegOptions `
+        -i "$VideoFile" -i "$AudioFile" -c copy `
+        -metadata:g "encoding_tool=Facebook Video Optimizer v$FullVersion" `
+        "$OutputFile"
     Write-Host;
 
     Remove-Item $VideoFile -Force;
