@@ -143,8 +143,8 @@ function Encode {
 
     Write-Host $Strings["Muxing"];
     & "$FFmpeg" @FFmpegOptions `
-        -i "$VideoFile" -i "$AudioFile" -c copy `
-        -metadata:g "encoding_tool=Facebook Video Optimizer v$FullVersion" `
+        -i "$VideoFile" -i "$AudioFile" -c copy     `
+        -metadata:g "encoding_tool=$Identification" `
         "$OutputFile"
     Write-Host;
 

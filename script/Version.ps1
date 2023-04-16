@@ -1,8 +1,9 @@
 $Version = 20230329
 $PatchLevel = 0
 $FullVersion = "$Version.$PatchLevel"
+$Identification = "Facebook Video Optimizer v$FullVersion";
 
-Write-Host "Facebook Video Optimizer v$FullVersion"
+Write-Host $Identification
 Write-Host;
 
 $ProgressPreference = "SilentlyContinue";
