@@ -69,7 +69,7 @@ while ($true)
     {
         Write-Host ($Strings["ProcessingFile"] -f $Job.Input);
         $Success = Encode $Job;
-        Write-Host ($Success ? ($Strings["Finished"] -f $OutputFile) : $Strings["Failed"]);
+        Write-Host ($Success ? ($Strings["Finished"] -f $Job.Output) : $Strings["Failed"]);
         Write-Host;
     }
     Write-Host $Strings["EnterToContinue"];
