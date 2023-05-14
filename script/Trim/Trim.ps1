@@ -9,24 +9,29 @@ function Trim-Video {
     $Duration = (& "$FFprobe" -v quiet -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 $InputFile)
 
     $TimeStart = Get-UserInput -Prompt $Strings["TrimStart"] -Predicate {
-        param([string] $time)
-        if ("" -eq $time) { return $true; }
+        param([string] $Time)
+        if (-not $Time) { return $true; }
         try {
-            $seconds = ([timespan]$time).TotalSeconds;
-            return $seconds -ge 0 -and $seconds -le $Duration;
+            $Seconds = ([timespan]$Time).TotalSeconds;
+            return $Seconds -ge 0 -and $Seconds -le $Duration;
         }
         catch {
             return $false;
         }
     }
 
+    if (-not $TimeStart)
+    {
+        $TimeStart = "00:00:00.000";
+    }
+
     $TimeEnd = Get-UserInput -Prompt $Strings["TrimEnd"] -Predicate {
-        param([string] $time)
-        if ("" -eq $time) { return $true; }
+        param([string] $Time)
+        if (-not $Time) { return $true; }
         try {
-            $parsed = ([timespan]$time);
-            $seconds = $parsed.TotalSeconds;
-            return $seconds -ge 0 -and $seconds -le $Duration -and [timespan]$TimeStart -lt $parsed;
+            $Parsed = ([timespan]$Time);
+            $Seconds = $Parsed.TotalSeconds;
+            return $Seconds -ge 0 -and $Seconds -le $Duration -and [timespan]$TimeStart -lt $Parsed;
         }
         catch {
             return $false;
