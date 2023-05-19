@@ -35,6 +35,7 @@ function Get-EncoderSettings
                 "fps='min(source_fps, $MaxFps)'"
             )
         }
+        $EncoderSettings.CommonParam += ("-g", (5*(Invoke-Expression $VideoStreamInfo.r_frame_rate)))
         $EncoderSettings |
             Add-Member -NotePropertyMembers @{
                 "Filters" = $Filters;
