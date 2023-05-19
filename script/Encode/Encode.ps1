@@ -147,6 +147,7 @@ function Encode {
     & "$FFmpeg" @FFmpegOptions `
         -i "$VideoFile" -i "$AudioFile" -c copy     `
         -metadata:g "encoding_tool=$Identification" `
+        -movflags +faststart                        `
         "$OutputFile"
     Write-Host;
 
