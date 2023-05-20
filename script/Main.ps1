@@ -72,16 +72,27 @@ while ($true)
                     "Output" = $OutputFile;
                     "Mode" = "FileSize";
                     "Trim" = $TrimTime;
-                    "Encoder" = Get-EncoderSettings $FileInfo -Mode FileSize;
+                    "Encoder" = [PSCustomObject]@{
+                        Video = Get-EncoderSettings-Video -Mode FileSize $FileInfo.streams[0];
+                        Audio = Get-EncoderSettings-Audio -Mode FileSize;
+                    }
                 }
             }
             2 {
+                $NoTrim = $null -eq $TrimTime[0] -and $null -eq $TrimTime[1]
+                $SkipVideo = $NoTrim -and $FileInfo.streams[0].codec_name -eq "h264";
+                $SkipAudio = $NoTrim -and $FileInfo.streams[1].codec_name -eq "aac";
                 $EncodeJob = [PSCustomObject]@{
                     "Input" = $InputFile;
                     "Output" = $OutputFile;
                     "Mode" = "Quality";
                     "Trim" = $TrimTime;
-                    "Encoder" = Get-EncoderSettings $FileInfo -Mode Quality;
+                    "Encoder" = [PSCustomObject]@{
+                        Video = $SkipVideo ? (Get-EncoderSettings-Video -Mode Quality $FileInfo.streams[0])
+                            : $null;
+                        Audio = $SkipAudio ? (Get-EncoderSettings-Audio -Mode Quality)
+                            : $null;
+                    }
                 }
             }
         }
