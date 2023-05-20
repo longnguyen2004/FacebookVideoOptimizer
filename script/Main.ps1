@@ -55,10 +55,16 @@ while ($true)
         {
             $TrimTime = Trim-Video "$InputFile";
         }
+
+        $FileInfo = & "$FFprobe" -v quiet -print_format json -show_streams "$InputFile";
+        Write-Debug "Stream info:";
+        Write-Debug ("`n" + (($FileInfo | ForEach-Object { $_ + "`n" }) -join ""));
+        $FileInfo = $FileInfo | ConvertFrom-Json;
+
         $EncodeJob = [PSCustomObject]@{
             "Input" = $InputFile;
             "Output" = $OutputFile;
-            "Encoder" = Get-EncoderSettings $InputFile;
+            "Encoder" = Get-EncoderSettings $FileInfo
             "Trim" = $TrimTime;
         }
         $EncodeJobs += ,$EncodeJob;

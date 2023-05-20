@@ -2,7 +2,7 @@ function Get-EncoderSettings
 {
     param(
         [Parameter(Mandatory=$true)]
-        [string] $InputFile
+        [PSCustomObject] $FileInfo
     )
 
     function Get-EncoderSettings-Video
@@ -50,11 +50,6 @@ function Get-EncoderSettings
             "Bitrate" = 128;
         };
     }
-
-    $FileInfo = & "$FFprobe" -v quiet -print_format json -show_streams "$InputFile";
-    Write-Debug "Stream info:";
-    Write-Debug ("`n" + (($FileInfo | ForEach-Object { $_ + "`n" }) -join ""));
-    $FileInfo = $FileInfo | ConvertFrom-Json;
 
     return [PSCustomObject]@{
         "Video" = Get-EncoderSettings-Video $FileInfo.streams[0];
