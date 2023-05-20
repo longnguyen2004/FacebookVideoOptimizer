@@ -20,18 +20,16 @@ function Trim-Video {
         }
     }
 
-    if (-not $TimeStart)
-    {
-        $TimeStart = "00:00:00.000";
-    }
-
     $TimeEnd = Get-UserInput -Prompt $Strings["TrimEnd"] -Predicate {
         param([string] $Time)
         if (-not $Time) { return $true; }
         try {
             $Parsed = ([timespan]$Time);
             $Seconds = $Parsed.TotalSeconds;
-            return $Seconds -ge 0 -and $Seconds -le $Duration -and [timespan]$TimeStart -lt $Parsed;
+            return
+                $Seconds -ge 0         -and
+                $Seconds -le $Duration -and
+                ($TimeStart ? [timespan]$TimeStart -lt $Parsed : $true);
         }
         catch {
             return $false;
