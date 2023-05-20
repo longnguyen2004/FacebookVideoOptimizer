@@ -80,6 +80,11 @@ Rate control: LA_VBR
         "VideoPathPrompt" = "Path to videos (drag and drop allowed)";
         "VideoList" = "List of videos to process:";
         "InvalidPath" = "Invalid path: {0}";
+        "ProcessingMode" = @"
+Processing mode:
+1. File Size (small file size, worse quality)
+2. Quality (large file size, better quality)
+";
         "Finished" = @"
 Processing finished!
 Output file: {0}
@@ -159,8 +164,13 @@ Rate control: LA_VBR
 # Main program
         "DebugMode" = "Đã kích hoạt chế độ debug. FFmpeg sẽ hiển thị thêm thông tin về video.";
         "VideoPathPrompt" = "Đường dẫn đến các file video (có thể kéo thả)";
-        "VideoList" = "Danh sách các video sẽ xử lý:"
+        "VideoList" = "Danh sách các video sẽ xử lý:";
         "InvalidPath" = "Đường dẫn không hợp lệ: {0}";
+        "ProcessingMode" = @"
+Chế độ xử lý:
+1. File Size (kích cỡ file nhỏ, chất lượng thấp hơn)
+2. Quality (kích cỡ file lớn, chất lượng cao hơn)
+";
         "Finished" = @"
 Xử lý hoàn tất!
 File output: {0}
@@ -243,6 +253,11 @@ Rate control: LA_VBR
         "VideoPathPrompt" = "视频的路径（允许拖放）";
         "VideoList" = "要处理的视频列表:"
         "InvalidPath" = "无效路径: {0}";
+        "ProcessingMode" = @"
+处理模式:
+1. File Size (文件尺寸小，质量差)
+2. Quality (文件尺寸大，质量更好)
+";
         "Finished" = @"
 处理完毕！
 输出文件: {0}

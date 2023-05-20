@@ -2,7 +2,11 @@ function Get-EncoderSettings
 {
     param(
         [Parameter(Mandatory=$true)]
-        [PSCustomObject] $FileInfo
+        [PSCustomObject] $FileInfo,
+
+        [Parameter(Mandatory=$true)]
+        [CmdletBinding(PositionalBinding=$false)]
+        [string] $Mode
     )
 
     function Get-EncoderSettings-Video

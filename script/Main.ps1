@@ -61,12 +61,31 @@ while ($true)
         Write-Debug ("`n" + (($FileInfo | ForEach-Object { $_ + "`n" }) -join ""));
         $FileInfo = $FileInfo | ConvertFrom-Json;
 
-        $EncodeJob = [PSCustomObject]@{
-            "Input" = $InputFile;
-            "Output" = $OutputFile;
-            "Encoder" = Get-EncoderSettings $FileInfo
-            "Trim" = $TrimTime;
+        Write-Host $Strings["ProcessingMode"];
+        $ProcessingMode = Get-UserInput -Choices 1, 2;
+
+        switch ($ProcessingMode)
+        {
+            1 { 
+                $EncodeJob = [PSCustomObject]@{
+                    "Input" = $InputFile;
+                    "Output" = $OutputFile;
+                    "Mode" = "FileSize";
+                    "Trim" = $TrimTime;
+                    "Encoder" = Get-EncoderSettings $FileInfo -Mode FileSize;
+                }
+            }
+            2 {
+                $EncodeJob = [PSCustomObject]@{
+                    "Input" = $InputFile;
+                    "Output" = $OutputFile;
+                    "Mode" = "Quality";
+                    "Trim" = $TrimTime;
+                    "Encoder" = Get-EncoderSettings $FileInfo -Mode Quality;
+                }
+            }
         }
+        
         $EncodeJobs += ,$EncodeJob;
     }
 
