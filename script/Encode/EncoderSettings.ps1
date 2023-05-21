@@ -44,7 +44,7 @@ function Get-EncoderSettings-Video
     $EncoderSettings |
         Add-Member -NotePropertyMembers @{
             "Filters" = $Filters;
-            "Bitrate" = 1800;
+            "Bitrate" = $Mode -eq "Quality" ? $null : 1800;
         }
     return $EncoderSettings;
 }
