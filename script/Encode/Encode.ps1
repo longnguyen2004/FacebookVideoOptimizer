@@ -12,81 +12,90 @@ function Encode-Video {
         [Parameter(Mandatory=$true)]
         [string]$OutputFile,
         [Parameter(Mandatory=$true)]
-        [PSCustomObject]$EncoderSettings,
+        [Nullable[PSCustomObject]]$EncoderSettings,
         [string[]]$Trim
     )
 
-    $Encoder = $EncoderSettings.Encoder;
-    $CommonParam = $EncoderSettings.CommonParam;
-    $Filters = $EncoderSettings.Filters;
-    $Bitrate = $EncoderSettings.Bitrate;
-    $TimeStart, $TimeEnd = $Trim;
     Write-Host;
-
     Write-Host $Strings["ProcessingVideo"];
-    Write-Host ($Strings["Bitrate"] -f $Bitrate);
-    Write-Host ($Strings["EncoderSettings"] -f ($CommonParam -join " "));
-    Write-Host ($Strings["VideoFilters"] -f ($Filters -join ", "));
-    Write-Host;
-
-    $InputParams = ("-i", $InputFile);
-    if ($TimeStart)
+    if (-not $EncoderSettings)
     {
-        $InputParams = ("-ss", $TimeStart) + $InputParams;
-    }
-    if ($TimeEnd)
-    {
-        $InputParams = ("-to", $TimeEnd) + $InputParams;
-    }
-    $InputParams += ("-fps_mode", "cfr");
-
-    if ($Filters)
-    {
-        $InputParams += ("-vf", ($Filters -join ","));
-    }
-
-    if ($EncoderSettings."2PassParam")
-    {
-        $Pass1Param, $Pass2Param = $EncoderSettings."2PassParam";
-        Write-Host ($Strings["CurrentPass"] -f 1,2);
-        & "$FFmpeg" @FFmpegOptions `
-            @InputParams                     `
-            -c:v $Encoder -b:v "${Bitrate}k" `
-            @CommonParam @Pass1Param         `
-            -an -f null ($IsWindows ? "NUL" : "/dev/null")
+        & "$FFmpeg" @FFmpegOptions -i "$InputFile" -c:v copy -an "$OutputFile";
         Write-Host;
-        if ($LASTEXITCODE -ne 0) 
-        {
-            return $false;
-        }
-
-        Write-Host ($Strings["CurrentPass"] -f 2,2);
-        & "$FFmpeg" @FFmpegOptions `
-            @InputParams                     `
-            -c:v $Encoder -b:v "${Bitrate}k" `
-            @CommonParam @Pass2Param         `
-            -an "$OutputFile"
-        Write-Host;
-        Remove-Item "*2pass*";
-        if ($LASTEXITCODE -ne 0) 
-        {
-            return $false;
-        }
+        return -not $LASTEXITCODE;
     }
     else
     {
-        & "$FFmpeg" @FFmpegOptions `
-            @InputParams                     `
-            -c:v $Encoder -b:v "${Bitrate}k" `
-            @CommonParam                     `
-            -an "$OutputFile"
+        $Encoder = $EncoderSettings.Encoder;
+        $CommonParam = $EncoderSettings.CommonParam;
+        $Filters = $EncoderSettings.Filters;
+        $Bitrate = $EncoderSettings.Bitrate;
+        $TimeStart, $TimeEnd = $Trim;
+        
+        Write-Host ($Strings["Bitrate"] -f $Bitrate);
+        Write-Host ($Strings["EncoderSettings"] -f ($CommonParam -join " "));
+        Write-Host ($Strings["VideoFilters"] -f ($Filters -join ", "));
         Write-Host;
-        if ($LASTEXITCODE -ne 0) 
+
+        $InputParams = ("-i", $InputFile);
+        if ($TimeStart)
         {
-            return $false;
+            $InputParams = ("-ss", $TimeStart) + $InputParams;
         }
+        if ($TimeEnd)
+        {
+            $InputParams = ("-to", $TimeEnd) + $InputParams;
+        }
+        $InputParams += ("-fps_mode", "cfr");
+
+        if ($Filters)
+        {
+            $InputParams += ("-vf", ($Filters -join ","));
+        }
+
+        if ($EncoderSettings."2PassParam")
+        {
+            $Pass1Param, $Pass2Param = $EncoderSettings."2PassParam";
+            Write-Host ($Strings["CurrentPass"] -f 1,2);
+            & "$FFmpeg" @FFmpegOptions `
+                @InputParams                     `
+                -c:v $Encoder -b:v "${Bitrate}k" `
+                @CommonParam @Pass1Param         `
+                -an -f null ($IsWindows ? "NUL" : "/dev/null")
+            Write-Host;
+            if ($LASTEXITCODE -ne 0) 
+            {
+                return $false;
+            }
+
+            Write-Host ($Strings["CurrentPass"] -f 2,2);
+            & "$FFmpeg" @FFmpegOptions `
+                @InputParams                     `
+                -c:v $Encoder -b:v "${Bitrate}k" `
+                @CommonParam @Pass2Param         `
+                -an "$OutputFile"
+            Write-Host;
+            Remove-Item "*2pass*";
+            if ($LASTEXITCODE -ne 0) 
+            {
+                return $false;
+            }
+        }
+        else
+        {
+            & "$FFmpeg" @FFmpegOptions `
+                @InputParams                     `
+                -c:v $Encoder -b:v "${Bitrate}k" `
+                @CommonParam                     `
+                -an "$OutputFile"
+            Write-Host;
+            if ($LASTEXITCODE -ne 0) 
+            {
+                return $false;
+            }
+        }
+        return $true;
     }
-    return $true;
 }
 
 function Encode-Audio {
@@ -96,32 +105,42 @@ function Encode-Audio {
         [Parameter(Mandatory=$true)]
         [string]$OutputFile,
         [Parameter(Mandatory=$true)]
-        [PSCustomObject]$EncoderSettings,
+        [Nullable[PSCustomObject]]$EncoderSettings,
         [string[]]$Trim
     )
-    $Encoder = $EncoderSettings.Encoder;
-    $Bitrate = $EncoderSettings.Bitrate;
-    $TimeStart, $TimeEnd = $Trim;
     Write-Host $Strings["ProcessingAudio"];
-    Write-Host ($Strings["Bitrate"] -f $Bitrate);
 
-    $InputParams = ("-i", $InputFile);
-    if ($TimeStart)
+    if (-not $EncoderSettings)
     {
-        $InputParams = ("-ss", $TimeStart) + $InputParams;
+        & "$FFmpeg" @FFmpegOptions -i "$InputFile" -c:a copy -vn "$OutputFile";
+        Write-Host;
+        return -not $LASTEXITCODE;
     }
-    if ($TimeEnd)
+    else
     {
-        $InputParams = ("-to", $TimeEnd) + $InputParams;
-    }
+        $Encoder = $EncoderSettings.Encoder;
+        $Bitrate = $EncoderSettings.Bitrate;
+        $TimeStart, $TimeEnd = $Trim;
+        Write-Host ($Strings["Bitrate"] -f $Bitrate);
 
-    & "$FFmpeg" @FFmpegOptions `
-        @InputParams                     `
-        -c:a $Encoder -b:a "${Bitrate}k" `
-        -af "lowpass=f=16000:r=f64"      `
-        -vn "$OutputFile"
-    Write-Host;
-    return ($LASTEXITCODE -eq 0);
+        $InputParams = ("-i", $InputFile);
+        if ($TimeStart)
+        {
+            $InputParams = ("-ss", $TimeStart) + $InputParams;
+        }
+        if ($TimeEnd)
+        {
+            $InputParams = ("-to", $TimeEnd) + $InputParams;
+        }
+
+        & "$FFmpeg" @FFmpegOptions `
+            @InputParams                     `
+            -c:a $Encoder -b:a "${Bitrate}k" `
+            -af "lowpass=f=16000:r=f64"      `
+            -vn "$OutputFile"
+        Write-Host;
+        return ($LASTEXITCODE -eq 0);
+    }
 }
 function Encode {
     param(
