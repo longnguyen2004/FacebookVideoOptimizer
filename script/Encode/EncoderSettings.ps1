@@ -18,10 +18,10 @@ function Get-EncoderSettings-Video
     switch ($EncoderType)
     {
         1 {
-            $EncoderSettings = Get-EncoderSettings-Software $VideoStreamInfo;
+            $EncoderSettings = Get-EncoderSettings-Software -Mode $Mode $VideoStreamInfo;
         }
         2 {
-            $EncoderSettings = Get-EncoderSettings-Hardware $VideoStreamInfo;
+            $EncoderSettings = Get-EncoderSettings-Hardware -Mode $Mode $VideoStreamInfo;
         }
     }
     $MaxRes = $EncoderSettings.MaxRes;

@@ -1,4 +1,9 @@
 function Get-EncoderSettings-Hardware {
+    param(
+        [Parameter(Mandatory=$true)]
+        [CmdletBinding(PositionalBinding=$false)]
+        [string]$Mode
+    )
     function Find-GPU-Windows
     {
         $WmiOutput = Get-CimInstance win32_VideoController `
@@ -40,55 +45,112 @@ function Get-EncoderSettings-Hardware {
     Write-Host;
     switch ($GPU) {
         "NVIDIA" {
-            Write-Host ($Strings["EncoderInfo"] -f "NVIDIA NVENC","VBR High Quality");
-            return [PSCustomObject]@{
-                "Encoder"     = "h264_nvenc";
-                "CommonParam" = (
-                    "-multipass"   , "2",
-                    "-rc-lookahead", "200",
-                    "-spatial_aq"  , "1",
-                    "-temporal_aq" , "1",
-                    "-nonref_p"    , "1",
-                    "-coder"       , "cabac",
-                    "-b_ref_mode"  , "1",
-                    "-preset"      , "p7",
-                    "-maxrate:v"   , "5M",
-                    "-bufsize:v"   , "10M"
-                );
-                "MaxRes" = "720";
-                "MaxFps" = "60";
+            $CommonParams = (
+                "-multipass"   , "2",
+                "-rc-lookahead", "200",
+                "-spatial_aq"  , "1",
+                "-temporal_aq" , "1",
+                "-nonref_p"    , "1",
+                "-coder"       , "cabac",
+                "-b_ref_mode"  , "1",
+                "-preset"      , "p7",
+                "-rc"          , "vbr"
+            );
+            switch ($Mode)
+            {
+                "Quality" {
+                    Write-Host ($Strings["EncoderInfo"] -f "NVIDIA NVENC","Constant Quality");
+                    return [PSCustomObject]@{
+                        "Encoder"     = "h264_nvenc";
+                        "CommonParam" = $CommonParams + (
+                            "-cq" , "19",
+                            "-b:v", "0"
+                        );
+                        "MaxRes" = $null;
+                        "MaxFps" = "120";
+                    }
+                }
+                "FileSize" {
+                    Write-Host ($Strings["EncoderInfo"] -f "NVIDIA NVENC","VBR High Quality");
+                    return [PSCustomObject]@{
+                        "Encoder"     = "h264_nvenc";
+                        "CommonParam" = $CommonParams + (
+                            "-maxrate:v", "5M",
+                            "-bufsize:v", "10M"
+                        );
+                        "MaxRes" = "720";
+                        "MaxFps" = "60";
+                    }
+                }
             }
         }
         "AMD" {
-            Write-Host ($Strings["EncoderInfo"] -f "AMD AMF","VBR + Pre-Analysis")
-            return [PSCustomObject]@{
-                "Encoder"     = "h264_amf";
-                "CommonParam" = (
-                    "-quality"    , "quality",
-                    "-rc"         , "vbr_peak",
-                    "-vbaq"       , "1",
-                    "-preanalysis", "1",
-                    "-coder"      , "cabac",
-                    "-maxrate:v"  , "5M",
-                    "-bufsize:v"  , "10M"
-                );
-                "MaxRes" = "720";
-                "MaxFps" = "60";
+            $CommonParams = (
+                "-quality"    , "quality",
+                "-vbaq"       , "1",
+                "-preanalysis", "1",
+                "-coder"      , "cabac"
+            )
+            switch ($Mode)
+            {
+                "Quality" {
+                    Write-Host ($Strings["EncoderInfo"] -f "AMD AMF","CQP + Pre-Analysis")
+                    return [PSCustomObject]@{
+                        "Encoder"     = "h264_amf";
+                        "CommonParam" = $CommonParams + (
+                            "-rc"  , "cqp",
+                            "-qp_i", "15",
+                            "-qp_p", "19",
+                            "-qp_b", "23"
+                        );
+                        "MaxRes" = $null;
+                        "MaxFps" = "120";
+                    }
+                }
+                "FileSize" {
+                    Write-Host ($Strings["EncoderInfo"] -f "AMD AMF","VBR + Pre-Analysis")
+                    return [PSCustomObject]@{
+                        "Encoder"     = "h264_amf";
+                        "CommonParam" = $CommonParams + (
+                            "-rc"       , "vbr_peak",
+                            "-maxrate:v", "5M",
+                            "-bufsize:v", "10M"
+                        );
+                        "MaxRes" = "720";
+                        "MaxFps" = "60";
+                    }
+                }
             }
         }
         "Intel" {
-            Write-Host ($Strings["EncoderInfo"] -f "Intel QuickSync","Lookahead VBR");
-            return [PSCustomObject]@{
-                "Encoder"     = "h264_qsv";
-                "CommonParam" = (
-                    "-preset"          , "veryslow",
-                    "-rdo"             , "1",
-                    "-b_strategy"      , "1",
-                    "-look_ahead"      , "1",
-                    "-look_ahead_depth", "100"
-                );
-                "MaxRes" = "720";
-                "MaxFps" = "60";
+            $CommonParams = (
+                "-preset"          , "veryslow",
+                "-rdo"             , "1",
+                "-b_strategy"      , "1",
+                "-look_ahead"      , "1",
+                "-look_ahead_depth", "100"
+            );
+            switch ($Mode) {
+                "Quality" { 
+                    Write-Host ($Strings["EncoderInfo"] -f "Intel QuickSync","LA-ICQ");
+                    return [PSCustomObject]@{
+                        "Encoder"     = "h264_qsv";
+                        "CommonParam" = $CommonParams + (
+                            "-global_quality", "19"
+                        )
+                        "MaxRes" = $null;
+                        "MaxFps" = "120";
+                    }
+                }
+                "FileSize" {
+                    Write-Host ($Strings["EncoderInfo"] -f "Intel QuickSync","LA-VBR");
+                    return [PSCustomObject]@{
+                        "Encoder"     = "h264_qsv";
+                        "CommonParam" = $CommonParams
+                        "MaxRes" = "720";
+                        "MaxFps" = "60";
+                    }
+                }
             }
         }
     }
