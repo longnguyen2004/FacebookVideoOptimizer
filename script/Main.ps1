@@ -51,7 +51,7 @@ while ($true)
     {
         Clear-Host;
         Write-Host ($Strings["SettingsForFile"] -f $InputFile);
-        $OutputFile = Join-Path (Split-Path -Parent $InputFile) ((Split-Path -LeafBase $InputFile) + " (transcode).mp4");
+        $OutputFile = Join-Path (Split-Path -Parent $InputFile) ((Split-Path -LeafBase $InputFile) + " (processed).mp4");
         if ((Split-Path -Extension "$InputFile") -ne ".avs")
         {
             $TrimTime = Trim-Video "$InputFile";
