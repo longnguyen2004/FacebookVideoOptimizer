@@ -87,7 +87,7 @@ Rate control: LA_VBR
         "ProcessingMode" = @"
 Processing mode:
 1. File Size (small file size, worse quality)
-2. Quality (large file size, better quality)
+2. Quality (large file size, better quality) (EXPERIMENTAL)
 "@;
         "Finished" = @"
 Processing finished!
@@ -177,7 +177,7 @@ Rate control: LA_VBR
         "ProcessingMode" = @"
 Chế độ xử lý:
 1. File Size (kích cỡ file nhỏ, chất lượng thấp hơn)
-2. Quality (kích cỡ file lớn, chất lượng cao hơn)
+2. Quality (kích cỡ file lớn, chất lượng cao hơn) (EXPERIMENTAL)
 "@;
         "Finished" = @"
 Xử lý hoàn tất!
@@ -268,7 +268,7 @@ Rate control: LA_VBR
         "ProcessingMode" = @"
 处理模式:
 1. File Size (文件尺寸小，质量差)
-2. Quality (文件尺寸大，质量更好)
+2. Quality (文件尺寸大，质量更好) (EXPERIMENTAL)
 "@;
         "Finished" = @"
 处理完毕！
