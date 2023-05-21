@@ -38,10 +38,10 @@ function Copy-StreamWithPatches
 {
     param(
         [Parameter(Mandatory=$true)]
-        [System.IO.FileStream]$Input,
+        [System.IO.FileStream]$InputStream,
 
         [Parameter(Mandatory=$true)]
-        [System.IO.FileStream]$Output,
+        [System.IO.FileStream]$OutputStream,
 
         [Parameter(Mandatory=$true)]
         [PSCustomObject[]]$Patches
@@ -50,29 +50,29 @@ function Copy-StreamWithPatches
     $Patches = $Patches | Sort-Object -Property Offset;
 
     # Seek to beginning
-    $Input.Seek(0, [System.IO.SeekOrigin]::Begin);
+    $InputStream.Seek(0, [System.IO.SeekOrigin]::Begin);
 
     $BufferSize = 81920; # Taken from C# CopyTo buffer size
     $Buffer = [byte[]]::new($BufferSize);
     foreach ($Patch in $Patches)
     {
         # Copy bytes from before the patch point
-        $Count = $Patch.Offset - $Input.Position;
+        $Count = $Patch.Offset - $InputStream.Position;
         while ($Count -gt 0)
         {
             $NumBytes = [System.Math]::Min($Count, $BufferSize);
-            $Input.Read($Buffer, 0, $NumBytes);
-            $Output.Write($Buffer, 0, $NumBytes);
+            $InputStream.Read($Buffer, 0, $NumBytes);
+            $OutputStream.Write($Buffer, 0, $NumBytes);
             $Count -= $NumBytes;
         }
 
         # Write the new bytes in
-        $Output.Write($Patch.Data);
+        $OutputStream.Write($Patch.Data);
 
         # Advance the input by the number of skip bytes
-        $Input.Seek($Patch.Skip, [System.IO.SeekOrigin]::Current);
+        $InputStream.Seek($Patch.Skip, [System.IO.SeekOrigin]::Current);
     }
 
     # Copy the rest of the data
-    $Input.CopyTo($Output);
+    $InputStream.CopyTo($OutputStream);
 }
