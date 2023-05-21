@@ -38,7 +38,8 @@ function Get-EncoderSettings-Software
     $Preset = Get-UserInput -Choices $ValidPresets -Default $DefaultPreset;
 
     Write-Host;
-    Write-Host ($Strings["x264Info"] -f $Preset)
+    Write-Host ($Strings["EncoderInfo"] -f "libx264","2-pass VBR");
+    Write-Host "Preset: $Preset";
 
     return [PSCustomObject]@{
         "Encoder"     = "libx264";

@@ -40,7 +40,7 @@ function Get-EncoderSettings-Hardware {
     Write-Host;
     switch ($GPU) {
         "NVIDIA" {
-            Write-Host $Strings["NVENCInfo"]
+            Write-Host ($Strings["EncoderInfo"] -f "NVIDIA NVENC","VBR High Quality");
             return [PSCustomObject]@{
                 "Encoder"     = "h264_nvenc";
                 "CommonParam" = (
@@ -60,7 +60,7 @@ function Get-EncoderSettings-Hardware {
             }
         }
         "AMD" {
-            Write-Host $Strings["AMFInfo"]
+            Write-Host ($Strings["EncoderInfo"] -f "AMD AMF","VBR + Pre-Analysis")
             return [PSCustomObject]@{
                 "Encoder"     = "h264_amf";
                 "CommonParam" = (
@@ -77,7 +77,7 @@ function Get-EncoderSettings-Hardware {
             }
         }
         "Intel" {
-            Write-Host $Strings["QSInfo"]
+            Write-Host ($Strings["EncoderInfo"] -f "Intel QuickSync","Lookahead VBR");
             return [PSCustomObject]@{
                 "Encoder"     = "h264_qsv";
                 "CommonParam" = (

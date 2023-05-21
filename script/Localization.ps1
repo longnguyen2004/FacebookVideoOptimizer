@@ -28,6 +28,10 @@ Preset guide:
 "@;
 
 # Encoder info
+        "EncoderInfo" = @"
+Using {0} for encoding
+Rate control: {1}
+"@
         "x264Info" = @"
 Using libx264 for encoding
 Preset: {0}
@@ -84,7 +88,7 @@ Rate control: LA_VBR
 Processing mode:
 1. File Size (small file size, worse quality)
 2. Quality (large file size, better quality)
-";
+"@;
         "Finished" = @"
 Processing finished!
 Output file: {0}
@@ -114,6 +118,10 @@ Cách chọn preset:
 "@;
 
 # Encoder info
+        "EncoderInfo" = @"
+Sử dụng {0} để encode
+Rate control: {1}
+"@;
         "x264Info" = @"
 Sử dụng libx264 để encode
 Preset: {0}
@@ -170,7 +178,7 @@ Rate control: LA_VBR
 Chế độ xử lý:
 1. File Size (kích cỡ file nhỏ, chất lượng thấp hơn)
 2. Quality (kích cỡ file lớn, chất lượng cao hơn)
-";
+"@;
         "Finished" = @"
 Xử lý hoàn tất!
 File output: {0}
@@ -200,6 +208,10 @@ File output: {0}
 "@;
 
 # Encoder info
+        "EncoderInfo" = @"
+使用 {0} 进行编码
+Rate control: {1}
+"@;
         "x264Info" = @"
 使用 libx264 进行编码
 Preset: {0}
@@ -257,7 +269,7 @@ Rate control: LA_VBR
 处理模式:
 1. File Size (文件尺寸小，质量差)
 2. Quality (文件尺寸大，质量更好)
-";
+"@;
         "Finished" = @"
 处理完毕！
 输出文件: {0}
