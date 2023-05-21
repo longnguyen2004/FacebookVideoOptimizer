@@ -12,7 +12,8 @@ function Encode-Video {
         [Parameter(Mandatory=$true)]
         [string]$OutputFile,
         [Parameter(Mandatory=$true)]
-        [Nullable[PSCustomObject]]$EncoderSettings,
+        [AllowNull()]
+        [PSCustomObject]$EncoderSettings,
         [string[]]$Trim
     )
 
@@ -105,7 +106,8 @@ function Encode-Audio {
         [Parameter(Mandatory=$true)]
         [string]$OutputFile,
         [Parameter(Mandatory=$true)]
-        [Nullable[PSCustomObject]]$EncoderSettings,
+        [AllowNull()]
+        [PSCustomObject]$EncoderSettings,
         [string[]]$Trim
     )
     Write-Host $Strings["ProcessingAudio"];
