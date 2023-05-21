@@ -8,7 +8,7 @@ function Apply-BitrateHack
     )
     # Convert stream size to kilobits, then divide by 2000 (max Facebook bitrate)
     Write-Debug "[BitrateHack] Calculating new duration...";
-    $Duration = [System.Math]::Ceil($Stream.Length * 8 / 1000 / 2000) * 1000;
+    $Duration = [System.Math]::Ceiling($Stream.Length * 8 / 1000 / 2000) * 1000;
     $DurationAsBytes = [byte[]]::new(4);
     [System.Buffers.Binary.BinaryPrimitives]::WriteInt32BigEndian($DurationAsBytes, $Duration);
 
