@@ -12,39 +12,36 @@ function Apply-BitrateHack
     $DurationAsBytes = [byte[]]::new(4);
     [System.Buffers.Binary.BinaryPrimitives]::WriteInt32BigEndian($DurationAsBytes, $Duration);
 
-    $Patches = $null;
+    $Patches = @();
 
-    # Find the offset of the mvhd atom
-    Write-Debug "[BitrateHack] Finding mvhd atom...";
-    $Mvhd = Find-FirstOccurence $Stream ([System.Text.Encoding]::ASCII).GetBytes("mvhd");
-    if (-1 -eq $Mvhd)
+    Write-Debug "[BitrateHack] Getting all atoms...";
+    $Atoms = Get-Mp4Atoms $Stream;
+
+    $Mvhd = $Atoms | Where-Object -Property "Name" -EQ "mvhd";
+    if (-not $Mvhd)
     {
-        throw "Cannot find mvhd atom. Your file is corrupt.";
+        throw "mvhd atom not found. Your file is corrupt";
     }
-    $Patches += (,
+
+    $Tkhd = $Atoms | Where-Object -Property "Name" -EQ "tkhd";
+    if (-not $Tkhd)
+    {
+        throw "tkhd atom not found. Your file is corrupt";
+    }
+
+    $Patches += $Mvhd | ForEach-Object {
         [PSCustomObject]@{
-            Offset = $Mvhd + 20;
+            Offset = $_.Offset + 32;
+            Data = $DurationAsBytes;
             Skip = 4;
-            Data = $DurationAsBytes
         }
-    )
-
-    Write-Debug "[BitrateHack] Finding tkhd atoms...";
-    $TkhdCount = 0;
-    while (-1 -ne ($Tkhd = Find-FirstOccurence $Stream ([System.Text.Encoding]::ASCII).GetBytes("tkhd")))
-    {
-        $TkhdCount++;
-        $Patches += (,
-            [PSCustomObject]@{
-                Offset = $Tkhd + 24;
-                Skip = 4;
-                Data = $DurationAsBytes
-            }
-        )
     }
-    if (0 -eq $TkhdCount)
-    {
-        throw "Cannot find tkhd atom. Your file is corrupt.";
+    $Patches += $Tkhd | ForEach-Object {
+        [PSCustomObject]@{
+            Offset = $_.Offset + 28;
+            Data = $DurationAsBytes;
+            Skip = 4;
+        }
     }
     return $Patches;
 }

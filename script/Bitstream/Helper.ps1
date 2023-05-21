@@ -1,37 +1,68 @@
-function Find-FirstOccurence
+function Get-Mp4Atoms
 {
     param(
         [Parameter(Mandatory=$true)]
         [System.IO.FileStream]$Stream,
 
-        [Parameter(Mandatory=$true)]
-        [byte[]]$Data,
-
-        [switch]$SeekToBeginning
+        [int]$End = $Stream.Length
     )
-    $i = 0;
-    $Position = -1;
-    while (-1 -ne ($Byte = $Stream.ReadByte()))
+    $Atoms = $null;
+    $SizeBytes = [byte[]]::new(4);
+    $NameBytes = [byte[]]::new(4);
+    while ($End -eq -1 -or $Stream.Position -lt $End)
     {
-        if ($Data[$i] -eq $Byte)
+        # Read size, break the loop if can't read
+        if (4 -ne ($BytesRead = $Stream.Read($SizeBytes)))
         {
-            $i++;
-            if ($i -eq $Data.Count)
-            {
-                $Position = $Stream.Position - $Data.Count;
-                break;
-            }
+            [void]$Stream.Seek(-$BytesRead, [System.IO.SeekOrigin]::Current);
+            break;
+        }
+        $Size = [System.Buffers.Binary.BinaryPrimitives]::ReadInt32BigEndian($SizeBytes);
+
+        # Check if size is sane
+        if ($Size -lt 8 -or $Stream.Position + $Size - 4 -gt $End)
+        {
+            [void]$Stream.Seek(-4, [System.IO.SeekOrigin]::Current);
+            break;
+        }
+
+        # Read name
+        if (4 -ne ($BytesRead = $Stream.Read($NameBytes)))
+        {
+            [void]$Stream.Seek(-4 -$BytesRead, [System.IO.SeekOrigin]::Current);
+            break;
+        }
+        $Name = [System.Text.Encoding]::ASCII.GetString($NameBytes, 0, 4);
+
+        # Check if name is compliant
+        if ($Name -notmatch "[a-z0-9]{4}")
+        {
+            [void]$Stream.Seek(-8, [System.IO.SeekOrigin]::Current);
+            break;
+        }
+        
+        $Offset = $Stream.Position - 8;
+        $Atom = [PSCustomObject]@{
+            Offset = $Offset;
+            Size = $Size;
+            Name = $Name;
+        };
+        Write-Debug "Found atom $Name, size $Size at $Offset";
+        $Atoms += (,$Atom);
+
+        # Attempt to read child atoms
+        if ($ChildAtoms = Get-Mp4Atoms $Stream ($Offset + $Size))
+        {
+            # Found child atoms, add to the list
+            $Atoms += $ChildAtoms;
         }
         else
         {
-            $i = 0;
+            # No child atoms, skip the data
+            [void]$Stream.Seek($Offset + $Size, [System.IO.SeekOrigin]::Begin);
         }
     }
-    if ($SeekToBeginning)
-    {
-        $Stream.Seek(0, [System.IO.SeekOrigin]::Begin);
-    }
-    return $Position;
+    return $Atoms;
 }
 
 function Copy-StreamWithPatches
