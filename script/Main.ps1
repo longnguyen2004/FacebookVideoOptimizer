@@ -29,6 +29,7 @@ $LogLevel = $Debug ? "verbose" : "error";
 . $PSScriptRoot/Encode/Encode.ps1
 . $PSScriptRoot/Encode/EncoderSettings.ps1
 . $PSScriptRoot/Trim/Trim.ps1
+. $PSScriptRoot/Bitstream/BitstreamHack.ps1
 
 while ($true)
 {
@@ -63,6 +64,7 @@ while ($true)
 
         Write-Host $Strings["ProcessingMode"];
         $ProcessingMode = Get-UserInput -Choices 1, 2;
+        Write-Host;
 
         switch ($ProcessingMode)
         {
@@ -79,7 +81,7 @@ while ($true)
                 }
             }
             2 {
-                $NoTrim = $null -eq $TrimTime[0] -and $null -eq $TrimTime[1];
+                $NoTrim = -not $TrimTime[0] -and -not $TrimTime[1];
                 $SkipVideo =
                     $NoTrim                                    -and
                     $FileInfo.streams[0].codec_name -eq "h264" -and
@@ -91,15 +93,14 @@ while ($true)
                     "Mode" = "Quality";
                     "Trim" = $TrimTime;
                     "Encoder" = [PSCustomObject]@{
-                        Video = $SkipVideo ? (Get-EncoderSettings-Video -Mode Quality $FileInfo.streams[0])
-                            : $null;
-                        Audio = $SkipAudio ? (Get-EncoderSettings-Audio -Mode Quality)
-                            : $null;
+                        Video = $SkipVideo ? $null
+                            : (Get-EncoderSettings-Video -Mode Quality $FileInfo.streams[0])
+                        Audio = $SkipAudio ? $null
+                            : (Get-EncoderSettings-Audio -Mode Quality)
                     }
                 }
             }
         }
-        
         $EncodeJobs += ,$EncodeJob;
     }
 
@@ -108,7 +109,16 @@ while ($true)
     {
         Write-Host ($Strings["ProcessingFile"] -f $Job.Input);
         $Success = Encode $Job;
-        Write-Host ($Success ? ($Strings["Finished"] -f $Job.Output) : $Strings["Failed"]);
+        if (-not $Success)
+        {
+            Write-Host $Strings["Failed"];
+            continue;
+        }
+        if ($Job.Mode -eq "Quality")
+        {
+            Apply-BitstreamHack $Job.Output $Job.Output;
+        }
+        Write-Host ($Strings["Finished"] -f $Job.Output);
         Write-Host;
     }
     Write-Host $Strings["EnterToContinue"];
