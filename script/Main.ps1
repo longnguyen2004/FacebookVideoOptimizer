@@ -79,8 +79,11 @@ while ($true)
                 }
             }
             2 {
-                $NoTrim = $null -eq $TrimTime[0] -and $null -eq $TrimTime[1]
-                $SkipVideo = $NoTrim -and $FileInfo.streams[0].codec_name -eq "h264";
+                $NoTrim = $null -eq $TrimTime[0] -and $null -eq $TrimTime[1];
+                $SkipVideo =
+                    $NoTrim                                    -and
+                    $FileInfo.streams[0].codec_name -eq "h264" -and
+                    (Invoke-Expression $FileInfo.streams[0].r_frame_rate) -le 120;
                 $SkipAudio = $NoTrim -and $FileInfo.streams[1].codec_name -eq "aac";
                 $EncodeJob = [PSCustomObject]@{
                     "Input" = $InputFile;
