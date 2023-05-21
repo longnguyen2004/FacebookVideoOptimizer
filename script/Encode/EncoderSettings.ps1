@@ -27,13 +27,18 @@ function Get-EncoderSettings-Video
     $MaxRes = $EncoderSettings.MaxRes;
     $MaxFps = $EncoderSettings.MaxFps;
 
+    $Filters = $null;
     # Trust the user if they're using AviSynth
     if ((Split-Path -Extension "$InputFile") -ne ".avs")
     {
-        $Filters = (
-            "scale=-2:'min(ih,$MaxRes)'",
-            "fps='min(source_fps, $MaxFps)'"
-        )
+        if ($MaxRes)
+        {
+            $Filters += ,"scale=-2:'min(ih,$MaxRes)'";
+        }
+        if ($MaxFps)
+        {
+            $Filters += ,"fps='min(source_fps, $MaxFps)'";
+        }
     }
     $EncoderSettings.CommonParam += ("-g", (5*(Invoke-Expression $VideoStreamInfo.r_frame_rate)))
     $EncoderSettings |
