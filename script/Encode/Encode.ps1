@@ -48,20 +48,23 @@ function Encode-Video {
             $InputParams = ("-to", $TimeEnd) + $InputParams;
         }
         $InputParams += ("-fps_mode", "cfr");
-
         if ($Filters)
         {
             $InputParams += ("-vf", ($Filters -join ","));
         }
 
+        if ($Bitrate)
+        {
+            $CommonParam += ("-b:v", "${Bitrate}k");
+        }
         if ($EncoderSettings."2PassParam")
         {
             $Pass1Param, $Pass2Param = $EncoderSettings."2PassParam";
             Write-Host ($Strings["CurrentPass"] -f 1,2);
             & "$FFmpeg" @FFmpegOptions `
-                @InputParams                     `
-                -c:v $Encoder -b:v "${Bitrate}k" `
-                @CommonParam @Pass1Param         `
+                @InputParams             `
+                -c:v $Encoder            `
+                @CommonParam @Pass1Param `
                 -an -f null ($IsWindows ? "NUL" : "/dev/null")
             Write-Host;
             if ($LASTEXITCODE -ne 0) 
@@ -71,9 +74,9 @@ function Encode-Video {
 
             Write-Host ($Strings["CurrentPass"] -f 2,2);
             & "$FFmpeg" @FFmpegOptions `
-                @InputParams                     `
-                -c:v $Encoder -b:v "${Bitrate}k" `
-                @CommonParam @Pass2Param         `
+                @InputParams             `
+                -c:v $Encoder            `
+                @CommonParam @Pass2Param `
                 -an "$OutputFile"
             Write-Host;
             Remove-Item "*2pass*";
@@ -85,9 +88,9 @@ function Encode-Video {
         else
         {
             & "$FFmpeg" @FFmpegOptions `
-                @InputParams                     `
-                -c:v $Encoder -b:v "${Bitrate}k" `
-                @CommonParam                     `
+                @InputParams  `
+                -c:v $Encoder `
+                @CommonParam  `
                 -an "$OutputFile"
             Write-Host;
             if ($LASTEXITCODE -ne 0) 
