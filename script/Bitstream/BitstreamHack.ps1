@@ -1,4 +1,4 @@
-. $PSScriptRoot/$Helper.ps1
+. $PSScriptRoot/Helper.ps1
 
 function Apply-BitrateHack
 {
