@@ -52,13 +52,19 @@ function Copy-StreamWithPatches
     # Seek to beginning
     $Input.Seek(0, [System.IO.SeekOrigin]::Begin);
 
+    $BufferSize = 81920; # Taken from C# CopyTo buffer size
+    $Buffer = [byte[]]::new($BufferSize);
     foreach ($Patch in $Patches)
     {
         # Copy bytes from before the patch point
         $Count = $Patch.Offset - $Input.Position;
-        $Bytes = [byte[]]::new($Count);
-        $Input.Read($Bytes);
-        $Output.Write($Bytes);
+        while ($Count -gt 0)
+        {
+            $NumBytes = [System.Math]::Min($Count, $BufferSize);
+            $Input.Read($Buffer, 0, $NumBytes);
+            $Output.Write($Buffer, 0, $NumBytes);
+            $Count -= $NumBytes;
+        }
 
         # Write the new bytes in
         $Output.Write($Patch.Data);
