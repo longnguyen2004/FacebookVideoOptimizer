@@ -31,7 +31,7 @@ function Apply-BitrateHack
 
     $Patches += $Mvhd | ForEach-Object {
         [PSCustomObject]@{
-            Offset = $_.Offset + 32;
+            Offset = $_.Offset + 24;
             Data = $DurationAsBytes;
             Skip = 4;
         }
