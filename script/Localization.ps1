@@ -32,23 +32,6 @@ Preset guide:
 Using {0} for encoding
 Rate control: {1}
 "@
-        "x264Info" = @"
-Using libx264 for encoding
-Preset: {0}
-Rate control: 2-pass VBR
-"@;
-        "NVENCInfo" = @"
-Using NVIDIA NVENC for encoding
-Rate control: VBR High Quality
-"@;
-        "AMFInfo" = @"
-Using AMD AMF for encoding
-Rate control: VBR + Pre-Analysis
-"@;
-        "QSInfo" = @"
-Using Intel QuickSync for encoding
-Rate control: LA_VBR
-"@;
 
 # Processing text
         "SettingsForFile" = "Settings for file {0}";
@@ -122,23 +105,6 @@ Cách chọn preset:
 Sử dụng {0} để encode
 Rate control: {1}
 "@;
-        "x264Info" = @"
-Sử dụng libx264 để encode
-Preset: {0}
-Rate control: 2-pass VBR
-"@;
-        "NVENCInfo" = @"
-Sử dụng NVIDIA NVENC để encode
-Rate control: VBR High Quality
-"@;
-        "AMFInfo" = @"
-Sử dụng AMD AMF để encode
-Rate control: VBR + Pre-Analysis
-"@;
-        "QSInfo" = @"
-Sử dụng Intel QuickSync để encode
-Rate control: LA_VBR
-"@;
 
 # Processing text
         "SettingsForFile" = "Cài đặt cho file {0}";
@@ -211,23 +177,6 @@ File output: {0}
         "EncoderInfo" = @"
 使用 {0} 进行编码
 Rate control: {1}
-"@;
-        "x264Info" = @"
-使用 libx264 进行编码
-Preset: {0}
-Rate control: 2-pass VBR
-"@;
-        "NVENCInfo" = @"
-使用 NVIDIA NVENC 进行编码
-Rate control: VBR High Quality
-"@;
-        "AMFInfo" = @"
-使用 AMD AMF 进行编码
-Rate control: VBR + Pre-Analysis
-"@;
-        "QSInfo" = @"
-使用 Intel QuickSync 进行编码
-Rate control: LA_VBR
 "@;
 
 # Processing text
