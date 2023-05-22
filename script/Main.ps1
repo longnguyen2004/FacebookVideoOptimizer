@@ -12,8 +12,9 @@ $Strings = $Translation[$Language];
 
 $RootDir = Resolve-Path (Join-Path "$PSScriptRoot" "..");
 
-. $PSScriptRoot/Utilities/Get-UserInput.ps1;
+. $PSScriptRoot/Utilities/Get-UserInput.ps1
 . $PSScriptRoot/Utilities/Parse-PathString.ps1
+. $PSScriptRoot/Utilities/Get-VideoInfo.ps1
 . $PSScriptRoot/Version.ps1
 . $PSScriptRoot/Dependencies/Dependencies.ps1
 
@@ -57,10 +58,7 @@ while ($true)
             $TrimTime = Trim-Video "$InputFile";
         }
 
-        $FileInfo = & "$FFprobe" -v quiet -print_format json -show_streams "$InputFile";
-        Write-Debug "Stream info:";
-        Write-Debug ("`n" + (($FileInfo | ForEach-Object { $_ + "`n" }) -join ""));
-        $FileInfo = $FileInfo | ConvertFrom-Json;
+        $FileInfo = Get-VideoInfo $InputFile
 
         Write-Host $Strings["ProcessingMode"];
         $ProcessingMode = Get-UserInput -Choices 1, 2;
