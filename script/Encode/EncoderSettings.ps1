@@ -55,8 +55,20 @@ function Get-EncoderSettings-Audio
         [CmdletBinding(PositionalBinding=$false)]
         [string]$Mode
     )
-    return [PSCustomObject]@{
-        "Encoder" = "aac";
-        "Bitrate" = $Mode -eq "FileSize" ? 128 : 320;
-    };
+    switch ($Mode)
+    {
+        "FileSize" {
+            return [PSCustomObject]@{
+                "Encoder" = "aac";
+                "Bitrate" = 128;
+                "Filter"  = ("lowpass=f=16000:r=f64")
+            };
+        }
+        "Quality" {
+            return [PSCustomObject]@{
+                "Encoder" = "aac";
+                "Bitrate" = 320;
+            };
+        }
+    }
 }

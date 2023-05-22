@@ -125,6 +125,7 @@ function Encode-Audio {
     {
         $Encoder = $EncoderSettings.Encoder;
         $Bitrate = $EncoderSettings.Bitrate;
+        $Filters = $EncoderSettings.Filters;
         $TimeStart, $TimeEnd = $Trim;
         Write-Host ($Strings["Bitrate"] -f $Bitrate);
 
@@ -137,11 +138,14 @@ function Encode-Audio {
         {
             $InputParams = ("-to", $TimeEnd) + $InputParams;
         }
+        if ($Filters)
+        {
+            $InputParams += ("-af", ($Filters -join ","));
+        }
 
         & "$FFmpeg" @FFmpegOptions `
             @InputParams                     `
             -c:a $Encoder -b:a "${Bitrate}k" `
-            -af "lowpass=f=16000:r=f64"      `
             -vn "$OutputFile"
         Write-Host;
         return ($LASTEXITCODE -eq 0);
