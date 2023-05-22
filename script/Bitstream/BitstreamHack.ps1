@@ -1,5 +1,5 @@
 . $PSScriptRoot/Helper.ps1
-
+. $PSScriptRoot/../Utilities/Get-VideoInfo.ps1
 function Apply-BitrateHack
 {
     param(
@@ -67,8 +67,13 @@ function Apply-BitstreamHack
         $OutputStream = [System.IO.FileStream]::new($OutputFile, [System.IO.FileMode]::Create);
     }
 
+    $FileInfo = Get-VideoInfo $InputFile;
     $Patches = $null;
-    $Patches += Apply-BitrateHack $InputStream;
+
+    if ([int]$FileInfo.format.bit_rate -gt 2000000)
+    {
+        $Patches += Apply-BitrateHack $InputStream;
+    }
 
     Copy-StreamWithPatches $InputStream $OutputStream $Patches;
     $InputStream.Close();
