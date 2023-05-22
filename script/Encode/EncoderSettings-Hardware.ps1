@@ -1,6 +1,9 @@
 function Get-EncoderSettings-Hardware {
     param(
         [Parameter(Mandatory=$true)]
+        $VideoInfo,
+
+        [Parameter(Mandatory=$true)]
         [CmdletBinding(PositionalBinding=$false)]
         [string]$Mode
     )
