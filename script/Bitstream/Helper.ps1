@@ -75,6 +75,7 @@ function Copy-StreamWithPatches
         [System.IO.FileStream]$OutputStream,
 
         [Parameter(Mandatory=$true)]
+        [AllowNull()]
         [PSCustomObject[]]$Patches
     )
     # Sort the patches by offset
