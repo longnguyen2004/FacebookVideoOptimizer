@@ -57,6 +57,10 @@ while ($true)
         {
             $TrimTime = Trim-Video "$InputFile";
         }
+		else
+		{
+			$TrimTime = ($null, $null);
+		}
 
         $FileInfo = Get-VideoInfo $InputFile
 
