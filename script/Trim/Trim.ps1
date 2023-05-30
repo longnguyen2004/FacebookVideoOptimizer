@@ -26,10 +26,9 @@ function Trim-Video {
         try {
             $Parsed = ([timespan]$Time);
             $Seconds = $Parsed.TotalSeconds;
-            return
-                $Seconds -ge 0         -and
-                $Seconds -le $Duration -and
-                ($TimeStart ? [timespan]$TimeStart -lt $Parsed : $true);
+            return $Seconds -ge 0         -and
+                   $Seconds -le $Duration -and
+                   ($TimeStart ? [timespan]$TimeStart -lt $Parsed : $true);
         }
         catch {
             return $false;
