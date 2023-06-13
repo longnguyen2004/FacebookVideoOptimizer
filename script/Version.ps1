@@ -1,4 +1,4 @@
-$Version = 20230612
+$Version = 20230613
 $PatchLevel = 0
 $FullVersion = "$Version.$PatchLevel"
 $Identification = "Facebook Video Optimizer v$FullVersion";
