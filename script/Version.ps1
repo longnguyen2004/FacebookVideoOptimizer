@@ -21,7 +21,7 @@ if ((Test-NetConnection))
             Invoke-WebRequest "https://github.com/longnguyen2004/FacebookVideoOptimizer/archive/refs/tags/${LatestVersion}.zip" -OutFile "$ZipPath";
             Expand-Archive -LiteralPath "$ZipPath" -DestinationPath "$TempPath";
             $Folder = Join-Path "$TempPath" "FacebookVideoOptimizer-$LatestVersion";
-            Get-ChildItem "$RootDir/*" -Exclude "tools" | Remove-Item -Recurse -Force;
+            Get-ChildItem "$RootDir" -Exclude "tools" | Remove-Item -Recurse -Force;
             Move-Item (Join-Path "$Folder" "*") -Destination "$RootDir";
             Remove-Item -Recurse -Force "$Folder";
             Remove-Item -Force "$ZipPath";
